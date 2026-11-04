@@ -2,10 +2,11 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>snapmail_lt</id>
 	<name>SnapMail LT</name>
-	<summary>A SnappyMail fork focused on integration with Nextcloud</summary>
-	<version>0.1.14</version>
+	<summary>A Nextcloud webmail app built on SnappyMail, by LibertyTalk FM</summary>
+	<version>1.0.0</version>
 	<licence>AGPL-3.0-only</licence>
-	<author homepage="https://github.com/oe79">Erhard Scharf</author>
+	<author homepage="https://github.com/LibertyTalk">LibertyTalk FM, Inc.</author>
+	<author homepage="https://github.com/oe79">Erhard Scharf (NextSnapMail)</author>
 	<author homepage="https://github.com/the-djmaze/snappymail">SnappyMail contributors</author>
 	<author>RainLoop Team</author>
 	<author>Nextgen-Networks</author>
@@ -14,8 +15,8 @@
 	<author>Pierre-Alain Bandinelli</author>
 	<description><![CDATA[**A SnappyMail fork focused on integration with Nextcloud.**
 
-SnapMail LT is an independent community fork of SnappyMail for the Nextcloud
-use case. It is not affiliated with, endorsed by, or sponsored by Nextcloud GmbH.
+SnapMail LT is an independent fork of SnappyMail, by way of NextSnapMail, built
+for the Nextcloud use case. It is not affiliated with, endorsed by, or sponsored by Nextcloud GmbH.
 
 SnapMail LT is under active development and provided as-is. Please test it
 carefully before using it in production. Installation and use are at your own
