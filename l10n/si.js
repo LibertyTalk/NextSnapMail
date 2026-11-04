@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "nextsnapmail",
+    "snapmail_lt",
     {
     "Email" : "විද්‍යුත් තැපෑල",
     "Error" : "දෝෂය",

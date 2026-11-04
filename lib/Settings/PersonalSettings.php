@@ -1,5 +1,5 @@
 <?php
-namespace OCA\NextSnapMail\Settings;
+namespace OCA\SnapMailLT\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
@@ -17,36 +17,36 @@ class PersonalSettings implements ISettings
 	public function getForm()
 	{
 		$uid = \OC::$server->get(\OCP\IUserSession::class)->getUser()->getUID();
-		$sEmail = $this->config->getUserValue($uid, 'nextsnapmail', 'nextsnapmail-email');
-		if ($sPass = $this->config->getUserValue($uid, 'nextsnapmail', 'nextsnapmail-password')) {
-			$this->config->deleteUserValue($uid, 'nextsnapmail', 'nextsnapmail-password');
-			$this->config->setUserValue($uid, 'nextsnapmail', 'passphrase', $sPass);
+		$sEmail = $this->config->getUserValue($uid, 'snapmail_lt', 'snapmail_lt-email');
+		if ($sPass = $this->config->getUserValue($uid, 'snapmail_lt', 'snapmail_lt-password')) {
+			$this->config->deleteUserValue($uid, 'snapmail_lt', 'snapmail_lt-password');
+			$this->config->setUserValue($uid, 'snapmail_lt', 'passphrase', $sPass);
 		}
 		$session = \OC::$server->get(\OCP\ISession::class);
 		$parameters = [
-			'nextsnapmail-email' => $sEmail,
-			'nextsnapmail-password' => $this->config->getUserValue($uid, 'nextsnapmail', 'passphrase') ? '******' : '',
+			'snapmail_lt-email' => $sEmail,
+			'snapmail_lt-password' => $this->config->getUserValue($uid, 'snapmail_lt', 'passphrase') ? '******' : '',
 			'gmail-oauth-enabled' => $this->isGmailOauthEnabled(),
 			'gmail-oauth-url' => \OC::$server->get(\OCP\IURLGenerator::class)
-				->linkToRoute('nextsnapmail.page.index') . '?NextSnapMailGmailOauthStart',
-			'gmail-oauth-message' => (string) $session->get('nextsnapmail-gmail-oauth-message'),
-			'gmail-oauth-error' => (string) $session->get('nextsnapmail-gmail-oauth-error')
+				->linkToRoute('snapmail_lt.page.index') . '?SnapMailLTGmailOauthStart',
+			'gmail-oauth-message' => (string) $session->get('snapmail_lt-gmail-oauth-message'),
+			'gmail-oauth-error' => (string) $session->get('snapmail_lt-gmail-oauth-error')
 		];
-		$session->remove('nextsnapmail-gmail-oauth-message');
-		$session->remove('nextsnapmail-gmail-oauth-error');
-		\OCP\Util::addScript('nextsnapmail', 'nextsnapmail');
-		return new TemplateResponse('nextsnapmail', 'personal_settings', $parameters, '');
+		$session->remove('snapmail_lt-gmail-oauth-message');
+		$session->remove('snapmail_lt-gmail-oauth-error');
+		\OCP\Util::addScript('snapmail_lt', 'snapmail_lt');
+		return new TemplateResponse('snapmail_lt', 'personal_settings', $parameters, '');
 	}
 
 	private function isGmailOauthEnabled(): bool
 	{
-		return '' !== \trim($this->config->getAppValue('nextsnapmail', 'gmail-oauth-client-id', ''))
-			&& '' !== \trim($this->config->getAppValue('nextsnapmail', 'gmail-oauth-client-secret', ''));
+		return '' !== \trim($this->config->getAppValue('snapmail_lt', 'gmail-oauth-client-id', ''))
+			&& '' !== \trim($this->config->getAppValue('snapmail_lt', 'gmail-oauth-client-secret', ''));
 	}
 
 	public function getSection()
 	{
-		return 'nextsnapmail';
+		return 'snapmail_lt';
 	}
 
 	public function getPriority()

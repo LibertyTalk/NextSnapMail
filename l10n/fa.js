@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "nextsnapmail",
+    "snapmail_lt",
     {
     "Email" : "email",
     "Error" : "خطا",

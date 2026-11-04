@@ -1,5 +1,5 @@
 /**
- * TinyMCE Composer for SnappyMail / NextSnapMail
+ * TinyMCE Composer for SnappyMail / SnapMail LT
  * Author: LibertyTalk FM, Inc.
  * Registers TinyMCE as a WYSIWYG editor through rl.registerWYSIWYG().
  * Modes: wysiwyg (TinyMCE), plain (textarea), source (HTML in textarea).

@@ -1,21 +1,21 @@
-.nextsnapmail-admin-settings {
+.snapmail_lt-admin-settings {
 	max-width: 1320px;
 }
 
-.nextsnapmail-admin-settings [hidden] {
+.snapmail_lt-admin-settings [hidden] {
 	display: none !important;
 }
 
-.nextsnapmail-admin-navigation,
-.nextsnapmail-webmail-navigation {
+.snapmail_lt-admin-navigation,
+.snapmail_lt-webmail-navigation {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.5rem;
 	margin: 1.25rem 0;
 }
 
-.nextsnapmail-admin-navigation-item,
-.nextsnapmail-webmail-navigation button {
+.snapmail_lt-admin-navigation-item,
+.snapmail_lt-webmail-navigation button {
 	min-height: 38px;
 	margin: 0;
 	padding: 0.45rem 0.85rem;
@@ -26,46 +26,46 @@
 	font-weight: 600;
 }
 
-.nextsnapmail-admin-navigation-item:hover,
-.nextsnapmail-admin-navigation-item:focus,
-.nextsnapmail-webmail-navigation button:hover,
-.nextsnapmail-webmail-navigation button:focus {
+.snapmail_lt-admin-navigation-item:hover,
+.snapmail_lt-admin-navigation-item:focus,
+.snapmail_lt-webmail-navigation button:hover,
+.snapmail_lt-webmail-navigation button:focus {
 	background: var(--color-background-hover, #f2f2f2);
 }
 
-.nextsnapmail-admin-navigation-item.active,
-.nextsnapmail-webmail-navigation button.active {
+.snapmail_lt-admin-navigation-item.active,
+.snapmail_lt-webmail-navigation button.active {
 	border-color: var(--color-primary-element, #00679e);
 	background: var(--color-primary-element, #00679e);
 	color: var(--color-primary-element-text, #fff);
 }
 
-.nextsnapmail-admin-page,
-.nextsnapmail-admin-context,
-.nextsnapmail-integrated-admin,
-.nextsnapmail-save-area {
+.snapmail_lt-admin-page,
+.snapmail_lt-admin-context,
+.snapmail_lt-integrated-admin,
+.snapmail_lt-save-area {
 	width: min(100%, 1280px);
 }
 
-.nextsnapmail-admin-page > h3 {
+.snapmail_lt-admin-page > h3 {
 	margin-top: 1.5rem;
 }
 
-.nextsnapmail-webmail-navigation {
+.snapmail_lt-webmail-navigation {
 	margin-top: 0.75rem;
 }
 
-.nextsnapmail-webmail-navigation button {
+.snapmail_lt-webmail-navigation button {
 	min-height: 32px;
 	padding: 0.3rem 0.7rem;
 	font-size: 0.9rem;
 }
 
-.nextsnapmail-integrated-admin {
+.snapmail_lt-integrated-admin {
 	margin: 0.75rem 0 1.5rem;
 }
 
-#nextsnapmail-admin-frame {
+#snapmail_lt-admin-frame {
 	display: block;
 	width: 100%;
 	height: min(720px, calc(100vh - 230px));
@@ -75,7 +75,7 @@
 	background: var(--color-main-background, #fff);
 }
 
-.nextsnapmail-settings-card {
+.snapmail_lt-settings-card {
 	box-sizing: border-box;
 	margin: 1rem 0;
 	padding: 1.25rem;
@@ -84,73 +84,73 @@
 	background: var(--color-main-background, #fff);
 }
 
-.nextsnapmail-settings-card h3:first-child {
+.snapmail_lt-settings-card h3:first-child {
 	margin-top: 0;
 }
 
-.nextsnapmail-settings-card p {
+.snapmail_lt-settings-card p {
 	margin: 0.85rem 0;
 }
 
-.nextsnapmail-settings-card label[for="nextsnapmail-gmail-oauth-client-id"],
-.nextsnapmail-settings-card label[for="nextsnapmail-gmail-oauth-client-secret"],
-.nextsnapmail-settings-card label[for="nextsnapmail-gmail-oauth-domains"],
-.nextsnapmail-settings-card label[for="nextsnapmail-app_path"] {
+.snapmail_lt-settings-card label[for="snapmail_lt-gmail-oauth-client-id"],
+.snapmail_lt-settings-card label[for="snapmail_lt-gmail-oauth-client-secret"],
+.snapmail_lt-settings-card label[for="snapmail_lt-gmail-oauth-domains"],
+.snapmail_lt-settings-card label[for="snapmail_lt-app_path"] {
 	display: block;
 }
 
-#nextsnapmail-gmail-oauth-client-id,
-#nextsnapmail-gmail-oauth-client-secret,
-#nextsnapmail-gmail-oauth-domains,
-#nextsnapmail-app_path {
+#snapmail_lt-gmail-oauth-client-id,
+#snapmail_lt-gmail-oauth-client-secret,
+#snapmail_lt-gmail-oauth-domains,
+#snapmail_lt-app_path {
 	box-sizing: border-box;
 	width: min(100%, 44rem);
 	margin-top: 0.35rem;
 }
 
-.nextsnapmail-callback-url code {
+.snapmail_lt-callback-url code {
 	display: block;
 	max-width: 100%;
 	margin-top: 0.35rem;
 	overflow-wrap: anywhere;
 }
 
-.nextsnapmail-radio-row {
+.snapmail_lt-radio-row {
 	display: flex;
 	align-items: flex-start;
 	gap: 0.5rem;
 }
 
-.nextsnapmail-radio-row input {
+.snapmail_lt-radio-row input {
 	flex: 0 0 auto;
 }
 
-.nextsnapmail-danger-zone {
+.snapmail_lt-danger-zone {
 	margin-top: 1.5rem;
 	border-color: var(--color-error, #d32f2f);
 }
 
-#nextsnapmail-reset-button {
+#snapmail_lt-reset-button {
 	border-color: var(--color-error, #d32f2f);
 	background: var(--color-error, #d32f2f);
 	color: #fff;
 }
 
-.nextsnapmail-save-area {
+.snapmail_lt-save-area {
 	margin-top: 1.25rem;
 }
 
 @media (max-width: 700px) {
-	.nextsnapmail-admin-navigation {
+	.snapmail_lt-admin-navigation {
 		flex-direction: column;
 	}
 
-	.nextsnapmail-admin-navigation-item {
+	.snapmail_lt-admin-navigation-item {
 		width: 100%;
 		text-align: left;
 	}
 
-	#nextsnapmail-admin-frame {
+	#snapmail_lt-admin-frame {
 		height: 680px;
 	}
 }

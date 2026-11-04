@@ -1,5 +1,5 @@
 <?php
-namespace OCA\NextSnapMail\Settings;
+namespace OCA\SnapMailLT\Settings;
 
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -18,12 +18,12 @@ class Section implements IIconSection
 
 	public function getID(): string
 	{
-		return 'nextsnapmail';
+		return 'snapmail_lt';
 	}
 
 	public function getName(): string
 	{
-		return $this->l->t('NextSnapMail');
+		return $this->l->t('SnapMail LT');
 	}
 
 	public function getPriority(): int
@@ -33,6 +33,6 @@ class Section implements IIconSection
 
 	public function getIcon(): string
 	{
-		return $this->urlGenerator->imagePath('nextsnapmail', 'favicon-mask.svg');
+		return $this->urlGenerator->imagePath('snapmail_lt', 'favicon-mask.svg');
 	}
 }

@@ -1,5 +1,5 @@
 <header>
-	<a href="#" class="close" data-bind="click: close"><span class="nextsnapmail-material-icon nextsnapmail-icon-close" aria-hidden="true"></span></a>
+	<a href="#" class="close" data-bind="click: close"><span class="snapmail_lt-material-icon snapmail_lt-icon-close" aria-hidden="true"></span></a>
 	<h3 data-bind="text: headerText"></h3>
 </header>
 <form class="modal-body" action="#/" spellcheck="false" onsubmit="return false;">
@@ -11,8 +11,8 @@
 			<input name="Name" type="text" class="span4" autofocus="" autocomplete="off" autocorrect="off" autocapitalize="off"
 				data-bind="textInput: name">
 			<div class="alert-error" data-bind="visible: savingError, text: savingError"></div>
-			<button class="btn nextsnapmail-icon-button" type="button" data-bind="click: autoconfig">
-				<span class="nextsnapmail-material-icon nextsnapmail-icon-cog" data-bind="visible: !detectingConfig()" aria-hidden="true"></span>
+			<button class="btn snapmail_lt-icon-button" type="button" data-bind="click: autoconfig">
+				<span class="snapmail_lt-material-icon snapmail_lt-icon-cog" data-bind="visible: !detectingConfig()" aria-hidden="true"></span>
 				<i class="icon-spinner" data-bind="visible: detectingConfig"></i>
 				autoconfig
 			</button>
@@ -94,7 +94,7 @@
 
 				<h4>
 					<span data-i18n="POPUPS_DOMAIN/DISABLE_CAPABILITIES"></span>
-					<a class="nextsnapmail-icon-action" style="margin-left:0.5em" href="https://github.com/the-djmaze/snappymail/wiki/IMAP-capabilities" target="_blank"><span class="nextsnapmail-material-icon nextsnapmail-icon-information" aria-hidden="true"></span></a>
+					<a class="snapmail_lt-icon-action" style="margin-left:0.5em" href="https://github.com/the-djmaze/snappymail/wiki/IMAP-capabilities" target="_blank"><span class="snapmail_lt-material-icon snapmail_lt-icon-information" aria-hidden="true"></span></a>
 				</h4>
 
 				<div data-bind="foreach: imapCapabilities" style="columns: 16em auto">
@@ -299,7 +299,7 @@
 			</div>
 
 			<input type="radio" name="tabs" id="tab-whitelist">
-			<label for="tab-whitelist" role="tab" tabindex="0" class="nextsnapmail-icon-button"><span class="nextsnapmail-material-icon nextsnapmail-icon-account-multiple" aria-hidden="true"></span><span data-i18n="POPUPS_DOMAIN/BUTTON_WHITE_LIST"></span></label>
+			<label for="tab-whitelist" role="tab" tabindex="0" class="snapmail_lt-icon-button"><span class="snapmail_lt-material-icon snapmail_lt-icon-account-multiple" aria-hidden="true"></span><span data-i18n="POPUPS_DOMAIN/BUTTON_WHITE_LIST"></span></label>
 			<div class="tab-content" role="tabpanel" aria-hidden="true">
 				<div class="alert" data-i18n="POPUPS_DOMAIN/WHITE_LIST_ALERT"></div>
 				<textarea class="input-xxlarge" style="width: 100%" rows="8" data-bind="value: whiteList" tabindex="-1" placeholder="@example.com&#10;user@example.org&#10;username"></textarea>
@@ -308,20 +308,20 @@
 	</div>
 </form>
 <div class="alert domain-test-result" data-bind="visible: testingDone, text: testingResultText, css: {
-	'nextsnapmail-test-success': testingResultSuccess,
+	'snapmail_lt-test-success': testingResultSuccess,
 	'alert-error': !testingResultSuccess() }"></div>
 <footer>
-	<a class="btn nextsnapmail-icon-button" data-bind="command: testConnectionCommand, css: {
+	<a class="btn snapmail_lt-icon-button" data-bind="command: testConnectionCommand, css: {
 	   'btn-success': testingDone() && testingResultSuccess(),
 	   'btn-danger': testingDone() && !testingResultSuccess() }">
-		<span class="nextsnapmail-material-icon nextsnapmail-icon-information" data-bind="visible: !testing()" aria-hidden="true"></span>
+		<span class="snapmail_lt-material-icon snapmail_lt-icon-information" data-bind="visible: !testing()" aria-hidden="true"></span>
 		<i class="icon-spinner" data-bind="visible: testing"></i>
 		<span data-i18n="GLOBAL/TEST"></span>
 	</a>
-	<a class="btn buttonClose nextsnapmail-icon-button" data-bind="click: close, visible: edit()"><span class="nextsnapmail-material-icon nextsnapmail-icon-close" aria-hidden="true"></span><span data-i18n="GLOBAL/CLOSE"></span></a>
-	<a class="btn buttonClose nextsnapmail-icon-button" data-bind="click: close, visible: !edit()"><span class="nextsnapmail-material-icon nextsnapmail-icon-close" aria-hidden="true"></span><span data-i18n="GLOBAL/CANCEL"></span></a>
-	<a class="btn nextsnapmail-icon-button" data-bind="command: createOrAddCommand">
-		<span class="nextsnapmail-material-icon nextsnapmail-icon-check" data-bind="visible: !saving()" aria-hidden="true"></span>
+	<a class="btn buttonClose snapmail_lt-icon-button" data-bind="click: close, visible: edit()"><span class="snapmail_lt-material-icon snapmail_lt-icon-close" aria-hidden="true"></span><span data-i18n="GLOBAL/CLOSE"></span></a>
+	<a class="btn buttonClose snapmail_lt-icon-button" data-bind="click: close, visible: !edit()"><span class="snapmail_lt-material-icon snapmail_lt-icon-close" aria-hidden="true"></span><span data-i18n="GLOBAL/CANCEL"></span></a>
+	<a class="btn snapmail_lt-icon-button" data-bind="command: createOrAddCommand">
+		<span class="snapmail_lt-material-icon snapmail_lt-icon-check" data-bind="visible: !saving()" aria-hidden="true"></span>
 		<i class="icon-spinner" data-bind="visible: saving"></i>
 		<span data-i18n="GLOBAL/SAVE"></span>
 	</a>

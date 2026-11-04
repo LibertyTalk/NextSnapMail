@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NextSnapMail\Util;
+namespace OCA\SnapMailLT\Util;
 
 class RainLoop
 {
@@ -17,7 +17,7 @@ class RainLoop
 	{
 		$config = \OC::$server->get(\OCP\IConfig::class);
 		$dir = \rtrim(\trim($config->getSystemValue('datadirectory', '')), '\\/');
-		$dir_snappy = $dir . '/appdata_nextsnapmail/';
+		$dir_snappy = $dir . '/appdata_snapmail_lt/';
 		$dir_rainloop = $dir . '/rainloop-storage';
 		$result = [];
 		$rainloop_plugins = [];

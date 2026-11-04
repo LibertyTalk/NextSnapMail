@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "nextsnapmail",
+    "snapmail_lt",
     {
     "Error" : "ýalňyşlyk",
     "Save" : "Saklamak",

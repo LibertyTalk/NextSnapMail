@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-	<id>nextsnapmail</id>
-	<name>NextSnapMail</name>
+	<id>snapmail_lt</id>
+	<name>SnapMail LT</name>
 	<summary>A SnappyMail fork focused on integration with Nextcloud</summary>
 	<version>0.1.14</version>
 	<licence>AGPL-3.0-only</licence>
@@ -14,10 +14,10 @@
 	<author>Pierre-Alain Bandinelli</author>
 	<description><![CDATA[**A SnappyMail fork focused on integration with Nextcloud.**
 
-NextSnapMail is an independent community fork of SnappyMail for the Nextcloud
+SnapMail LT is an independent community fork of SnappyMail for the Nextcloud
 use case. It is not affiliated with, endorsed by, or sponsored by Nextcloud GmbH.
 
-NextSnapMail is under active development and provided as-is. Please test it
+SnapMail LT is under active development and provided as-is. Please test it
 carefully before using it in production. Installation and use are at your own
 risk.
 
@@ -30,9 +30,9 @@ risk.
   and addresses loaded automatically from the selected account and flexible
   per-sender reply intervals for the full absence, daily, weekly or custom use
 - **Safe multi-instance Sieve handling** that detects and preserves vacation
-  settings created by another NextSnapMail instance and allows explicit removal
+  settings created by another SnapMail LT instance and allows explicit removal
 - **Explicit migration of existing managed Sieve filters** from
-  `rainloop.user` to `nextsnapmail.user`; both scripts remain independently
+  `rainloop.user` to `snapmail_lt.user`; both scripts remain independently
   editable until the user deliberately starts the migration
 - **Almost all IMAP features** including advanced searching
 - **Integration with Nextcloud Unified Search**
@@ -49,8 +49,8 @@ risk.
   additional mail account is active
 - **Admin-assisted import from existing SnappyMail installations**, including
   stored mailbox credentials, additional accounts and app data
-- **Admin reset option** to remove NextSnapMail account settings and recreate a
-  clean NextSnapMail data folder when troubleshooting is needed
+- **Admin reset option** to remove SnapMail LT account settings and recreate a
+  clean SnapMail LT data folder when troubleshooting is needed
 - **Admin-controlled message list size**, including default value, maximum
   value and an optional enforced setting for all users
 - **Send & receive OpenPGP encrypted/signed emails** (With full HTML support, ECC keys, or plain text with Mailvelope)
@@ -59,30 +59,30 @@ risk.
 - **Kolab integrations**
 
 After enabling the app, administrators can manage the complete webmail
-configuration in the dedicated "NextSnapMail" section of the Nextcloud
+configuration in the dedicated "SnapMail LT" section of the Nextcloud
 administration settings without a separate webmail administrator login.
 Users can add their initial mailbox credentials in the dedicated
-"NextSnapMail" section of their personal settings.
+"SnapMail LT" section of their personal settings.
 
-Administrators can also use the NextSnapMail administration settings to import
-data from an existing SnappyMail installation or reset NextSnapMail data for
+Administrators can also use the SnapMail LT administration settings to import
+data from an existing SnappyMail installation or reset SnapMail LT data for
 troubleshooting.
 	]]></description>
-	<namespace>NextSnapMail</namespace>
+	<namespace>SnapMailLT</namespace>
 	<documentation>
-		<user>https://github.com/oe79/NextSnapMail/blob/master/README.md</user>
-		<admin>https://github.com/oe79/NextSnapMail/blob/master/README.md</admin>
-		<developer>https://github.com/oe79/NextSnapMail</developer>
-		<website>https://github.com/oe79/NextSnapMail</website>
+		<user>https://github.com/LibertyTalk/snapmail_lt/blob/master/README.md</user>
+		<admin>https://github.com/LibertyTalk/snapmail_lt/blob/master/README.md</admin>
+		<developer>https://github.com/LibertyTalk/snapmail_lt</developer>
+		<website>https://github.com/LibertyTalk/snapmail_lt</website>
 	</documentation>
 	<category>integration</category>
 	<category>office</category>
 	<category>search</category>
 	<category>social</category>
-	<website>https://github.com/oe79/NextSnapMail</website>
-	<discussion>https://github.com/oe79/NextSnapMail/discussions</discussion>
-	<repository>https://github.com/oe79/NextSnapMail</repository>
-	<bugs>https://github.com/oe79/NextSnapMail/issues</bugs>
+	<website>https://github.com/LibertyTalk/snapmail_lt</website>
+	<discussion>https://github.com/LibertyTalk/snapmail_lt/discussions</discussion>
+	<repository>https://github.com/LibertyTalk/snapmail_lt</repository>
+	<bugs>https://github.com/LibertyTalk/snapmail_lt/issues</bugs>
 	<dependencies>
 		<php min-version="7.4" min-int-size="32" />
 		<lib>mbstring</lib>
@@ -112,28 +112,28 @@ troubleshooting.
 		<nextcloud min-version="20" max-version="35" />
 	</dependencies>
 	<settings>
-		<admin-section>OCA\NextSnapMail\Settings\Section</admin-section>
-		<admin>OCA\NextSnapMail\Settings\AdminSettings</admin>
-		<personal-section>OCA\NextSnapMail\Settings\Section</personal-section>
-		<personal>OCA\NextSnapMail\Settings\PersonalSettings</personal>
+		<admin-section>OCA\SnapMailLT\Settings\Section</admin-section>
+		<admin>OCA\SnapMailLT\Settings\AdminSettings</admin>
+		<personal-section>OCA\SnapMailLT\Settings\Section</personal-section>
+		<personal>OCA\SnapMailLT\Settings\PersonalSettings</personal>
 	</settings>
 	<navigations>
 		<navigation>
 			<name>Email</name>
-			<route>nextsnapmail.page.index</route>
+			<route>snapmail_lt.page.index</route>
 			<icon>logo-white-64x64.png</icon>
 			<order>4</order>
 		</navigation>
 	</navigations>
 	<repair-steps>
 		<install>
-			<step>OCA\NextSnapMail\Migration\InstallStep</step>
+			<step>OCA\SnapMailLT\Migration\InstallStep</step>
 		</install>
 		<post-migration>
-			<step>OCA\NextSnapMail\Migration\InstallStep</step>
+			<step>OCA\SnapMailLT\Migration\InstallStep</step>
 		</post-migration>
 	</repair-steps>
 	<commands>
-		<command>OCA\NextSnapMail\Command\Settings</command>
+		<command>OCA\SnapMailLT\Command\Settings</command>
 	</commands>
 </info>

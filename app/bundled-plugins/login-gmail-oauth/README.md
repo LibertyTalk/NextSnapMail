@@ -1,6 +1,6 @@
 # Login Gmail OAuth2
 
-Experimental NextSnapMail Gmail/Google Workspace OAuth2 login plugin.
+Experimental SnapMail LT Gmail/Google Workspace OAuth2 login plugin.
 
 This plugin is intentionally separate from the legacy `login-gmail` plugin. It
 uses current Google OAuth2 endpoints and keeps the old plugin untouched while
@@ -8,7 +8,7 @@ the new flow is tested.
 
 It supports two flows:
 
-- login from the classic SnappyMail/NextSnapMail login screen
+- login from the classic SnappyMail/SnapMail LT login screen
 - adding a Gmail/Google Workspace address as an additional account from the
   user account settings
 
@@ -20,7 +20,7 @@ the redirect URI shown in the plugin settings.
 Typical Nextcloud redirect URI:
 
 ```text
-https://example.com/index.php/apps/nextsnapmail/?LoginGmailOauth
+https://example.com/index.php/apps/snapmail_lt/?LoginGmailOauth
 ```
 
 When enabled, the plugin can automatically create Gmail-style domain

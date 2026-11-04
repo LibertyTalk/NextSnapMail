@@ -1,8 +1,8 @@
 <?php
 // https://docs.nextcloud.com/server/19/developer_manual/app/repair.html
-namespace OCA\NextSnapMail\Migration;
+namespace OCA\SnapMailLT\Migration;
 
-use OCA\NextSnapMail\AppInfo\Application;
+use OCA\SnapMailLT\AppInfo\Application;
 use OCP\IConfig;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
@@ -16,7 +16,7 @@ use OCP\ILogger;
 class InstallStep implements IRepairStep
 {
 	public function getName() {
-		return 'Setup NextSnapMail';
+		return 'Setup SnapMail LT';
 	}
 
 	public function run(IOutput $output) {
@@ -29,7 +29,7 @@ class InstallStep implements IRepairStep
 		\is_callable('opcache_reset') && \opcache_reset();
 
 		$output->info('Load App');
-		\OCA\NextSnapMail\Util\SnappyMailHelper::loadApp();
+		\OCA\SnapMailLT\Util\SnappyMailHelper::loadApp();
 
 		$output->info('Fix permissions');
 		\SnappyMail\Upgrade::fixPermissions();
@@ -59,7 +59,7 @@ class InstallStep implements IRepairStep
 
 		if (!$oConfig->Get('webmail', 'app_path')) {
 			$output->info('Set config [webmail]app_path');
-			$oConfig->Set('webmail', 'app_path', \OC::$server->get(\OCP\App\IAppManager::class)->getAppWebPath('nextsnapmail') . '/app/');
+			$oConfig->Set('webmail', 'app_path', \OC::$server->get(\OCP\App\IAppManager::class)->getAppWebPath('snapmail_lt') . '/app/');
 			$oConfig->Set('webmail', 'allow_languages_on_settings', false);
 			$oConfig->Set('login', 'allow_languages_on_login', false);
 			$bSave = true;
@@ -68,7 +68,7 @@ class InstallStep implements IRepairStep
 		$sLoadingDescription = $oConfig->Get('webmail', 'loading_description', '');
 		if (!$sLoadingDescription || 'SnappyMail' === $sLoadingDescription) {
 			$output->info('Set config [webmail]loading_description');
-			$oConfig->Set('webmail', 'loading_description', 'NextSnapMail - based on SnappyMail');
+			$oConfig->Set('webmail', 'loading_description', 'SnapMail LT - based on SnappyMail');
 			$bSave = true;
 		}
 
@@ -128,7 +128,7 @@ class InstallStep implements IRepairStep
 
 		// check if admins provided additional/custom initial config file
 		// https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html#setting-a-single-configuration-value
-		// ex: php occ config:app:set nextsnapmail custom_config_file --value="/path/to/config.php"
+		// ex: php occ config:app:set snapmail_lt custom_config_file --value="/path/to/config.php"
 		// https://github.com/the-djmaze/snappymail/pull/1197
 		try {
 			/** @var IConfig $ncConfig */

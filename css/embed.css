@@ -1,7 +1,7 @@
 /*
 This stylesheet is used when SnappyMail runs in embed mode.
 */
-#content.app-nextsnapmail {
+#content.app-snapmail_lt {
 	max-height: 100%;
 }
 #content #rl-app {

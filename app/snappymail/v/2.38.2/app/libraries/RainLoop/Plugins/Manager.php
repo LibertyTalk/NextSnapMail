@@ -29,7 +29,7 @@ class Manager
 		$bOptionalPluginsEnabled = (bool) $oConfig->Get('plugins', 'enable', false);
 		$bNextcloudIntegrated = \class_exists('OC') && isset(\OC::$server);
 
-		// NextSnapMail's Nextcloud integration is a mandatory system module. It
+		// SnapMail LT's Nextcloud integration is a mandatory system module. It
 		// must keep working even when support for optional plugins is disabled.
 		$this->bIsEnabled = $bOptionalPluginsEnabled || $bNextcloudIntegrated;
 		if ($bNextcloudIntegrated) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\NextSnapMail\Dashboard;
+namespace OCA\SnapMailLT\Dashboard;
 
-use OCA\NextSnapMail\Util\SnappyMailHelper;
+use OCA\SnapMailLT\Util\SnappyMailHelper;
 
 use OCP\AppFramework\Services\IInitialState;
 use OCP\Dashboard\IAPIWidget;
@@ -38,7 +38,7 @@ class UnreadMailWidget implements IAPIWidget, IIconWidget/*, IOptionWidget*/
 	 */
 	public function getId(): string
 	{
-		return 'nextsnapmail-unread';
+		return 'snapmail_lt-unread';
 	}
 
 	/**
@@ -74,7 +74,7 @@ class UnreadMailWidget implements IAPIWidget, IIconWidget/*, IOptionWidget*/
 	 */
 	public function getUrl(): ?string
 	{
-		return $this->urlGenerator->getAbsoluteURL($this->urlGenerator->linkToRoute('nextsnapmail.page.index'));
+		return $this->urlGenerator->getAbsoluteURL($this->urlGenerator->linkToRoute('snapmail_lt.page.index'));
 	}
 
 	/**
@@ -122,7 +122,7 @@ class UnreadMailWidget implements IAPIWidget, IIconWidget/*, IOptionWidget*/
 			// instanceof \MailSo\Mail\MessageCollection
 			$MessageCollection = $oMailClient->MessageList($oParams);
 
-			$baseURL = $this->urlGenerator->linkToRoute('nextsnapmail.page.index') . '#';
+			$baseURL = $this->urlGenerator->linkToRoute('snapmail_lt.page.index') . '#';
 
 			foreach ($MessageCollection as $Message) {
 				$result[] = new WidgetItem(
@@ -155,7 +155,7 @@ class UnreadMailWidget implements IAPIWidget, IIconWidget/*, IOptionWidget*/
 	{
 		SnappyMailHelper::loadApp();
 //		return $this->urlGenerator->getAbsoluteURL(
-		return \RainLoop\Utils::WebStaticPath('images/nextsnapmail-logo.png');
+		return \RainLoop\Utils::WebStaticPath('images/snapmail_lt-logo.png');
 	}
 
 	// IOptionWidget

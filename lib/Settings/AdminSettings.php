@@ -1,5 +1,5 @@
 <?php
-namespace OCA\NextSnapMail\Settings;
+namespace OCA\SnapMailLT\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
@@ -16,29 +16,29 @@ class AdminSettings implements ISettings
 
 	public function getForm()
 	{
-		\OCA\NextSnapMail\Util\SnappyMailHelper::loadApp();
+		\OCA\SnapMailLT\Util\SnappyMailHelper::loadApp();
 
 		$keys = [
-			'nextsnapmail-autologin',
-			'nextsnapmail-autologin-with-email',
-			'nextsnapmail-autologin-oidc'
+			'snapmail_lt-autologin',
+			'snapmail_lt-autologin-with-email',
+			'snapmail_lt-autologin-oidc'
 		];
 		$parameters = [];
 		foreach ($keys as $k) {
-			$v = $this->config->getAppValue('nextsnapmail', $k);
+			$v = $this->config->getAppValue('snapmail_lt', $k);
 			$parameters[$k] = $v;
 		}
-		$parameters['nextsnapmail-integrated-admin-url'] =
-			\OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('nextsnapmail.page.admin');
+		$parameters['snapmail_lt-integrated-admin-url'] =
+			\OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('snapmail_lt.page.admin');
 
 		$oConfig = \RainLoop\Api::Config();
 		$brandingChanged = false;
 		if ('SnappyMail Webmail' === $oConfig->Get('webmail', 'title', '')) {
-			$oConfig->Set('webmail', 'title', 'NextSnapMail Webmail');
+			$oConfig->Set('webmail', 'title', 'SnapMail LT Webmail');
 			$brandingChanged = true;
 		}
 		if ('SnappyMail' === $oConfig->Get('webmail', 'loading_description', '')) {
-			$oConfig->Set('webmail', 'loading_description', 'NextSnapMail');
+			$oConfig->Set('webmail', 'loading_description', 'SnapMail LT');
 			$brandingChanged = true;
 		}
 		if ($brandingChanged) {
@@ -55,24 +55,24 @@ class AdminSettings implements ISettings
 			. '/rainloop-storage'
 		);
 
-		$parameters['nextsnapmail-debug'] = $oConfig->Get('debug', 'enable', false);
+		$parameters['snapmail_lt-debug'] = $oConfig->Get('debug', 'enable', false);
 
 		// Prevent "Failed loading /nextcloud/snappymail/v/2.N.N/static/js/min/libs.min.js"
 		$app_path = $oConfig->Get('webmail', 'app_path');
 		if (!$app_path) {
-			$app_path = \OC::$server->get(\OCP\App\IAppManager::class)->getAppWebPath('nextsnapmail') . '/app/';
+			$app_path = \OC::$server->get(\OCP\App\IAppManager::class)->getAppWebPath('snapmail_lt') . '/app/';
 			$oConfig->Set('webmail', 'app_path', $app_path);
 			$oConfig->Set('webmail', 'theme', 'NextcloudV25+');
 			$oConfig->Save();
 		}
-		$parameters['nextsnapmail-app_path'] = $oConfig->Get('webmail', 'app_path', false);
-		$parameters['nextsnapmail-nc-lang'] = !$oConfig->Get('webmail', 'allow_languages_on_settings', true);
-		$parameters['gmail-oauth-client-id'] = $this->config->getAppValue('nextsnapmail', 'gmail-oauth-client-id', '');
-		$parameters['gmail-oauth-client-secret-set'] = '' !== $this->config->getAppValue('nextsnapmail', 'gmail-oauth-client-secret', '');
-		$parameters['gmail-oauth-domains'] = $this->config->getAppValue('nextsnapmail', 'gmail-oauth-domains', "gmail.com\ngooglemail.com");
-		$parameters['gmail-oauth-auto-configure'] = $this->config->getAppValue('nextsnapmail', 'gmail-oauth-auto-configure', '1');
+		$parameters['snapmail_lt-app_path'] = $oConfig->Get('webmail', 'app_path', false);
+		$parameters['snapmail_lt-nc-lang'] = !$oConfig->Get('webmail', 'allow_languages_on_settings', true);
+		$parameters['gmail-oauth-client-id'] = $this->config->getAppValue('snapmail_lt', 'gmail-oauth-client-id', '');
+		$parameters['gmail-oauth-client-secret-set'] = '' !== $this->config->getAppValue('snapmail_lt', 'gmail-oauth-client-secret', '');
+		$parameters['gmail-oauth-domains'] = $this->config->getAppValue('snapmail_lt', 'gmail-oauth-domains', "gmail.com\ngooglemail.com");
+		$parameters['gmail-oauth-auto-configure'] = $this->config->getAppValue('snapmail_lt', 'gmail-oauth-auto-configure', '1');
 		$parameters['gmail-oauth-callback-url'] = \OC::$server->get(\OCP\IURLGenerator::class)
-			->linkToRouteAbsolute('nextsnapmail.page.index') . '?NextSnapMailGmailOauth';
+			->linkToRouteAbsolute('snapmail_lt.page.index') . '?SnapMailLTGmailOauth';
 
 		$oNextcloudPlugin = \RainLoop\Api::Actions()->Plugins()->CreatePluginByName('nextcloud');
 		$oNextcloudPluginConfig = $oNextcloudPlugin ? $oNextcloudPlugin->Config() : null;
@@ -83,16 +83,16 @@ class AdminSettings implements ISettings
 		$parameters['nextcloud-plugin-calendar'] = $oNextcloudPluginConfig
 			? (bool) $oNextcloudPluginConfig->Get('plugin', 'calendar', false) : false;
 
-		\OCP\Util::addScript('nextsnapmail', 'nextsnapmail');
-		\OCP\Util::addScript('nextsnapmail', 'admin-dashboard');
-		\OCP\Util::addStyle('nextsnapmail', 'style');
-		\OCP\Util::addStyle('nextsnapmail', 'admin-dashboard');
-		return new TemplateResponse('nextsnapmail', 'admin-local', $parameters);
+		\OCP\Util::addScript('snapmail_lt', 'snapmail_lt');
+		\OCP\Util::addScript('snapmail_lt', 'admin-dashboard');
+		\OCP\Util::addStyle('snapmail_lt', 'style');
+		\OCP\Util::addStyle('snapmail_lt', 'admin-dashboard');
+		return new TemplateResponse('snapmail_lt', 'admin-local', $parameters);
 	}
 
 	public function getSection()
 	{
-		return 'nextsnapmail';
+		return 'snapmail_lt';
 	}
 
 	public function getPriority()

@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\NextSnapMail\Controller;
+namespace OCA\SnapMailLT\Controller;
 
-use OCA\NextSnapMail\Util\SnappyMailHelper;
+use OCA\SnapMailLT\Util\SnappyMailHelper;
 
 use OCP\App\IAppManager;
 use OCP\AppFramework\Controller;
@@ -13,7 +13,7 @@ use OCP\IRequest;
 
 class FetchController extends Controller {
 	private const DELETE_OLD_SNAPPYMAIL_CONFIRMATION = 'DELETE_SNAPPYMAIL_DATA';
-	private const RESET_NEXTSNAPMAIL_CONFIRMATION = 'RESET';
+	private const RESET_SNAPMAIL_LT_CONFIRMATION = 'RESET';
 	private const MAX_ADDITIONAL_ACCOUNTS_BYTES = 1048576;
 	private const MAX_PGP_BACKUP_KEY_BYTES = 1048576;
 	private const MAX_PLUGIN_UPLOAD_BYTES = 5242880;
@@ -53,8 +53,8 @@ class FetchController extends Controller {
 			$sUrl = '';
 			$sPath = '';
 
-			if (isset($_POST['appname']) && 'nextsnapmail' === $_POST['appname']) {
-				if (!empty($_POST['nextsnapmail-list-old-snappymail-accounts'])) {
+			if (isset($_POST['appname']) && 'snapmail_lt' === $_POST['appname']) {
+				if (!empty($_POST['snapmail_lt-list-old-snappymail-accounts'])) {
 					return $this->safeJsonResponse(function (): JSONResponse {
 						$accounts = $this->getOldSnappyMailAccounts();
 						return new JSONResponse([
@@ -68,7 +68,7 @@ class FetchController extends Controller {
 					});
 				}
 
-				if (!empty($_POST['nextsnapmail-import-selected-snappymail-accounts'])) {
+				if (!empty($_POST['snapmail_lt-import-selected-snappymail-accounts'])) {
 					return $this->safeJsonResponse(function (): JSONResponse {
 						return new JSONResponse([
 							'status' => 'success',
@@ -79,18 +79,18 @@ class FetchController extends Controller {
 					});
 				}
 
-				if (!empty($_POST['nextsnapmail-delete-imported-account'])) {
+				if (!empty($_POST['snapmail_lt-delete-imported-account'])) {
 					return $this->safeJsonResponse(function (): JSONResponse {
 						return new JSONResponse([
 							'status' => 'success',
-							'Message' => \implode("\n", $this->deleteNextSnapMailAccountForReimport()),
+							'Message' => \implode("\n", $this->deleteSnapMailLTAccountForReimport()),
 							'Accounts' => \array_values($this->getOldSnappyMailAccounts()),
 							'AppData' => $this->scanOldSnappyMailAppData()
 						]);
 					});
 				}
 
-				if (!empty($_POST['nextsnapmail-delete-old-snappymail-data'])) {
+				if (!empty($_POST['snapmail_lt-delete-old-snappymail-data'])) {
 					return $this->safeJsonResponse(function (): JSONResponse {
 						return new JSONResponse([
 							'status' => 'success',
@@ -101,16 +101,16 @@ class FetchController extends Controller {
 					});
 				}
 
-				if (!empty($_POST['nextsnapmail-reset-data'])) {
+				if (!empty($_POST['snapmail_lt-reset-data'])) {
 					return $this->safeJsonResponse(function (): JSONResponse {
 						return new JSONResponse([
 							'status' => 'success',
-							'Message' => \implode("\n", $this->resetNextSnapMailData())
+							'Message' => \implode("\n", $this->resetSnapMailLTData())
 						]);
 					});
 				}
 
-				if (!empty($_POST['nextsnapmail-upload-plugin'])) {
+				if (!empty($_POST['snapmail_lt-upload-plugin'])) {
 					return $this->safeJsonResponse(function (): JSONResponse {
 						return new JSONResponse([
 							'status' => 'success',
@@ -119,27 +119,27 @@ class FetchController extends Controller {
 					});
 				}
 
-				$this->config->setAppValue('nextsnapmail', 'nextsnapmail-autologin',
-					isset($_POST['nextsnapmail-autologin']) ? '1' === $_POST['nextsnapmail-autologin'] : false);
-				$this->config->setAppValue('nextsnapmail', 'nextsnapmail-autologin-with-email',
-					isset($_POST['nextsnapmail-autologin']) ? '2' === $_POST['nextsnapmail-autologin'] : false);
-				$this->config->setAppValue('nextsnapmail', 'nextsnapmail-no-embed', isset($_POST['nextsnapmail-no-embed']));
-				$this->config->setAppValue('nextsnapmail', 'nextsnapmail-autologin-oidc', isset($_POST['nextsnapmail-autologin-oidc']));
-				$this->config->setAppValue('nextsnapmail', 'gmail-oauth-client-id',
-					\trim((string) ($_POST['nextsnapmail-gmail-oauth-client-id'] ?? '')));
-				if (isset($_POST['nextsnapmail-gmail-oauth-client-secret'])
-					&& '' !== \trim((string) $_POST['nextsnapmail-gmail-oauth-client-secret'])) {
-					$this->config->setAppValue('nextsnapmail', 'gmail-oauth-client-secret',
+				$this->config->setAppValue('snapmail_lt', 'snapmail_lt-autologin',
+					isset($_POST['snapmail_lt-autologin']) ? '1' === $_POST['snapmail_lt-autologin'] : false);
+				$this->config->setAppValue('snapmail_lt', 'snapmail_lt-autologin-with-email',
+					isset($_POST['snapmail_lt-autologin']) ? '2' === $_POST['snapmail_lt-autologin'] : false);
+				$this->config->setAppValue('snapmail_lt', 'snapmail_lt-no-embed', isset($_POST['snapmail_lt-no-embed']));
+				$this->config->setAppValue('snapmail_lt', 'snapmail_lt-autologin-oidc', isset($_POST['snapmail_lt-autologin-oidc']));
+				$this->config->setAppValue('snapmail_lt', 'gmail-oauth-client-id',
+					\trim((string) ($_POST['snapmail_lt-gmail-oauth-client-id'] ?? '')));
+				if (isset($_POST['snapmail_lt-gmail-oauth-client-secret'])
+					&& '' !== \trim((string) $_POST['snapmail_lt-gmail-oauth-client-secret'])) {
+					$this->config->setAppValue('snapmail_lt', 'gmail-oauth-client-secret',
 						SnappyMailHelper::encodePassword(
-							\trim((string) $_POST['nextsnapmail-gmail-oauth-client-secret']),
-							'nextsnapmail-gmail-oauth-client-secret'
+							\trim((string) $_POST['snapmail_lt-gmail-oauth-client-secret']),
+							'snapmail_lt-gmail-oauth-client-secret'
 						)
 					);
 				}
-				$this->config->setAppValue('nextsnapmail', 'gmail-oauth-domains',
-					\trim((string) ($_POST['nextsnapmail-gmail-oauth-domains'] ?? "gmail.com\ngooglemail.com")));
-				$this->config->setAppValue('nextsnapmail', 'gmail-oauth-auto-configure',
-					isset($_POST['nextsnapmail-gmail-oauth-auto-configure']) ? '1' : '0');
+				$this->config->setAppValue('snapmail_lt', 'gmail-oauth-domains',
+					\trim((string) ($_POST['snapmail_lt-gmail-oauth-domains'] ?? "gmail.com\ngooglemail.com")));
+				$this->config->setAppValue('snapmail_lt', 'gmail-oauth-auto-configure',
+					isset($_POST['snapmail_lt-gmail-oauth-auto-configure']) ? '1' : '0');
 			} else {
 				return new JSONResponse([
 					'status' => 'error',
@@ -150,11 +150,11 @@ class FetchController extends Controller {
 			SnappyMailHelper::loadApp();
 
 			$oConfig = \RainLoop\Api::Config();
-			if (!empty($_POST['nextsnapmail-app_path'])) {
-				$oConfig->Set('webmail', 'app_path', $_POST['nextsnapmail-app_path']);
+			if (!empty($_POST['snapmail_lt-app_path'])) {
+				$oConfig->Set('webmail', 'app_path', $_POST['snapmail_lt-app_path']);
 			}
-			$oConfig->Set('webmail', 'allow_languages_on_settings', empty($_POST['nextsnapmail-nc-lang']));
-			$oConfig->Set('login', 'allow_languages_on_login', empty($_POST['nextsnapmail-nc-lang']));
+			$oConfig->Set('webmail', 'allow_languages_on_settings', empty($_POST['snapmail_lt-nc-lang']));
+			$oConfig->Set('login', 'allow_languages_on_login', empty($_POST['snapmail_lt-nc-lang']));
 			$oConfig->Save();
 
 			$oNextcloudPlugin = \RainLoop\Api::Actions()->Plugins()->CreatePluginByName('nextcloud');
@@ -171,11 +171,11 @@ class FetchController extends Controller {
 			if (!empty($_POST['import-rainloop'])) {
 				return new JSONResponse([
 					'status' => 'success',
-					'Message' => \implode("\n", \OCA\NextSnapMail\Util\RainLoop::import())
+					'Message' => \implode("\n", \OCA\SnapMailLT\Util\RainLoop::import())
 				]);
 			}
 
-			$debug = !empty($_POST['nextsnapmail-debug']);
+			$debug = !empty($_POST['snapmail_lt-debug']);
 			$oConfig = \RainLoop\Api::Config();
 			if ($debug != $oConfig->Get('debug', 'enable', false)) {
 				$oConfig->Set('debug', 'enable', $debug);
@@ -228,9 +228,9 @@ class FetchController extends Controller {
 					'hasPassphrase' => false,
 					'hasLegacyPassword' => false,
 					'hasPassword' => false,
-					'nextsnapmailExists' => false,
-					'nextsnapmailEmailExists' => false,
-					'nextsnapmailPassphraseExists' => false
+					'snapmail_ltExists' => false,
+					'snapmail_ltEmailExists' => false,
+					'snapmail_ltPassphraseExists' => false
 				];
 			}
 
@@ -251,12 +251,12 @@ class FetchController extends Controller {
 
 		foreach ($accounts as $uid => &$account) {
 			$account['hasPassword'] = $account['hasPassphrase'] || $account['hasLegacyPassword'];
-			$account['nextsnapmailEmailExists'] =
-				'' !== $this->config->getUserValue($uid, 'nextsnapmail', 'nextsnapmail-email', '');
-			$account['nextsnapmailPassphraseExists'] =
-				'' !== $this->config->getUserValue($uid, 'nextsnapmail', 'passphrase', '');
-			$account['nextsnapmailExists'] =
-				$account['nextsnapmailEmailExists'] || $account['nextsnapmailPassphraseExists'];
+			$account['snapmail_ltEmailExists'] =
+				'' !== $this->config->getUserValue($uid, 'snapmail_lt', 'snapmail_lt-email', '');
+			$account['snapmail_ltPassphraseExists'] =
+				'' !== $this->config->getUserValue($uid, 'snapmail_lt', 'passphrase', '');
+			$account['snapmail_ltExists'] =
+				$account['snapmail_ltEmailExists'] || $account['snapmail_ltPassphraseExists'];
 		}
 		unset($account);
 
@@ -268,7 +268,7 @@ class FetchController extends Controller {
 
 		return [
 			'source' => $datadir . '/appdata_snappymail',
-			'target' => $datadir . '/appdata_nextsnapmail'
+			'target' => $datadir . '/appdata_snapmail_lt'
 		];
 	}
 
@@ -299,7 +299,7 @@ class FetchController extends Controller {
 			return $callback();
 		} catch (\Throwable $e) {
 			\OC::$server->get(\Psr\Log\LoggerInterface::class)->error($e->getMessage(), [
-				'app' => 'nextsnapmail',
+				'app' => 'snapmail_lt',
 				'exception' => $e
 			]);
 
@@ -419,7 +419,7 @@ class FetchController extends Controller {
 			}
 
 			$target = $this->normalizePath(APP_PLUGINS_PATH . $pluginId);
-			$overwrite = !empty($_POST['nextsnapmail-plugin-overwrite']);
+			$overwrite = !empty($_POST['snapmail_lt-plugin-overwrite']);
 			$lines = [];
 
 			if (\is_dir($target)) {
@@ -437,11 +437,11 @@ class FetchController extends Controller {
 			}
 
 			$this->copyDirectoryForReset($source, $target);
-			\file_put_contents($target . '/.user-installed-nextsnapmail-plugin', \gmdate('c') . "\n");
+			\file_put_contents($target . '/.user-installed-snapmail_lt-plugin', \gmdate('c') . "\n");
 			$this->writeUserInstalledPluginRegistry($pluginId);
 
 			$lines[] = $this->l->t('Plugin package was installed.') . ': ' . $pluginId;
-			$lines[] = $this->l->t('Open the NextSnapMail admin panel and enable the plugin under Extensions.');
+			$lines[] = $this->l->t('Open the SnapMail LT admin panel and enable the plugin under Extensions.');
 
 			return $lines;
 		} finally {
@@ -453,13 +453,13 @@ class FetchController extends Controller {
 
 	private function getUploadedPluginFile(): ?array {
 		$file = \method_exists($this->request, 'getUploadedFile')
-			? $this->request->getUploadedFile('nextsnapmail-plugin-package')
+			? $this->request->getUploadedFile('snapmail_lt-plugin-package')
 			: null;
 		if (\is_array($file)) {
 			return $file;
 		}
-		return isset($_FILES['nextsnapmail-plugin-package']) && \is_array($_FILES['nextsnapmail-plugin-package'])
-			? $_FILES['nextsnapmail-plugin-package']
+		return isset($_FILES['snapmail_lt-plugin-package']) && \is_array($_FILES['snapmail_lt-plugin-package'])
+			? $_FILES['snapmail_lt-plugin-package']
 			: null;
 	}
 
@@ -606,11 +606,11 @@ class FetchController extends Controller {
 		}
 
 		if (!\is_dir($target) && !\mkdir($target, 0700, true) && !\is_dir($target)) {
-			return [$this->l->t('Could not create NextSnapMail app data folder.') . ': ' . $target];
+			return [$this->l->t('Could not create SnapMail LT app data folder.') . ': ' . $target];
 		}
 		$target = $this->realDirectoryPath($target);
 		if (null === $target) {
-			return [$this->l->t('Could not create NextSnapMail app data folder.') . ': ' . $paths['target']];
+			return [$this->l->t('Could not create SnapMail LT app data folder.') . ': ' . $paths['target']];
 		}
 
 		$iterator = new \RecursiveIteratorIterator(
@@ -685,7 +685,7 @@ class FetchController extends Controller {
 			$this->l->t('Skipped existing files') . ': ' . $result['skippedFiles'],
 			$this->l->t('Created directories') . ': ' . $result['createdDirectories'],
 			$this->l->t('Copied bytes') . ': ' . $result['copiedBytes'],
-			$this->l->t('Existing NextSnapMail app data files were not overwritten.')
+			$this->l->t('Existing SnapMail LT app data files were not overwritten.')
 		];
 	}
 
@@ -852,7 +852,7 @@ class FetchController extends Controller {
 		}
 	}
 
-	private function writeNextSnapMailMainCryptKey(string $email, #[\SensitiveParameter] string $password): void {
+	private function writeSnapMailLTMainCryptKey(string $email, #[\SensitiveParameter] string $password): void {
 		SnappyMailHelper::loadApp();
 
 		$paths = $this->getAppDataImportPaths();
@@ -872,7 +872,7 @@ class FetchController extends Controller {
 		);
 	}
 
-	private function getNextSnapMailMainAccountCryptKey(string $email, #[\SensitiveParameter] string $password): ?string {
+	private function getSnapMailLTMainAccountCryptKey(string $email, #[\SensitiveParameter] string $password): ?string {
 		SnappyMailHelper::loadApp();
 
 		$paths = $this->getAppDataImportPaths();
@@ -896,8 +896,8 @@ class FetchController extends Controller {
 		return null;
 	}
 
-	private function prepareNextSnapMailMainCryptKey(string $email, #[\SensitiveParameter] string $password): array {
-		$existingCryptKey = $this->getNextSnapMailMainAccountCryptKey($email, $password);
+	private function prepareSnapMailLTMainCryptKey(string $email, #[\SensitiveParameter] string $password): array {
+		$existingCryptKey = $this->getSnapMailLTMainAccountCryptKey($email, $password);
 		if (\is_string($existingCryptKey)) {
 			return [
 				'key' => $existingCryptKey,
@@ -906,10 +906,10 @@ class FetchController extends Controller {
 			];
 		}
 
-		$this->writeNextSnapMailMainCryptKey($email, $password);
+		$this->writeSnapMailLTMainCryptKey($email, $password);
 		$newCryptKey = \hex2bin(\sha1($password . APP_SALT));
 		if (!\is_string($newCryptKey)) {
-			throw new \RuntimeException($this->l->t('Could not create NextSnapMail crypt key.'));
+			throw new \RuntimeException($this->l->t('Could not create SnapMail LT crypt key.'));
 		}
 
 		return [
@@ -994,9 +994,9 @@ class FetchController extends Controller {
 
 			$lines = [$this->l->t('Additional accounts skipped: old SnappyMail salt was not found.')];
 			if ($preservedExisting) {
-				$lines[] = $this->l->t('Preserved existing NextSnapMail additional accounts') . ': ' . $preservedExisting;
+				$lines[] = $this->l->t('Preserved existing SnapMail LT additional accounts') . ': ' . $preservedExisting;
 			} else if ($discardedExisting) {
-				$lines[] = $this->l->t('Existing NextSnapMail additional accounts reset because their crypt key could not be reused.');
+				$lines[] = $this->l->t('Existing SnapMail LT additional accounts reset because their crypt key could not be reused.');
 			}
 			return $lines;
 		}
@@ -1009,9 +1009,9 @@ class FetchController extends Controller {
 
 			$lines = [$this->l->t('Additional accounts skipped: no old additional accounts file was found.')];
 			if ($preservedExisting) {
-				$lines[] = $this->l->t('Preserved existing NextSnapMail additional accounts') . ': ' . $preservedExisting;
+				$lines[] = $this->l->t('Preserved existing SnapMail LT additional accounts') . ': ' . $preservedExisting;
 			} else if ($discardedExisting) {
-				$lines[] = $this->l->t('Existing NextSnapMail additional accounts reset because their crypt key could not be reused.');
+				$lines[] = $this->l->t('Existing SnapMail LT additional accounts reset because their crypt key could not be reused.');
 			}
 			return $lines;
 		}
@@ -1084,9 +1084,9 @@ class FetchController extends Controller {
 
 		return [
 			$this->l->t('Additional accounts migration completed.'),
-			$this->l->t('Preserved existing NextSnapMail additional accounts') . ': ' . $preservedExisting,
+			$this->l->t('Preserved existing SnapMail LT additional accounts') . ': ' . $preservedExisting,
 			$this->l->t('Converted additional accounts') . ': ' . $converted,
-			$this->l->t('Skipped because an existing NextSnapMail additional account was kept') . ': ' . $keptBecauseExisting,
+			$this->l->t('Skipped because an existing SnapMail LT additional account was kept') . ': ' . $keptBecauseExisting,
 			$this->l->t('Skipped additional accounts') . ': ' . $skipped
 		];
 	}
@@ -1129,7 +1129,7 @@ class FetchController extends Controller {
 		}
 	}
 
-	private function writeNextSnapMailPgpBackupKeyFile(
+	private function writeSnapMailLTPgpBackupKeyFile(
 		string $targetFile,
 		#[\SensitiveParameter] string $plainKey,
 		#[\SensitiveParameter] string $newCryptKey
@@ -1147,7 +1147,7 @@ class FetchController extends Controller {
 		\RainLoop\Utils::saveFile($targetFile, \json_encode($encryptedKey));
 	}
 
-	private function isNextSnapMailPgpBackupKeyFileValid(string $targetFile, #[\SensitiveParameter] string $newCryptKey): bool {
+	private function isSnapMailLTPgpBackupKeyFileValid(string $targetFile, #[\SensitiveParameter] string $newCryptKey): bool {
 		if (!\is_file($targetFile)) {
 			return false;
 		}
@@ -1205,7 +1205,7 @@ class FetchController extends Controller {
 			}
 
 			$targetFile = \rtrim($targetDirectory, '\\/') . '/' . \MailSo\Base\Utils::SecureFileName(\basename($sourceFile));
-			if ($reuseExistingCryptKey && $this->isNextSnapMailPgpBackupKeyFileValid($targetFile, $newCryptKey)) {
+			if ($reuseExistingCryptKey && $this->isSnapMailLTPgpBackupKeyFileValid($targetFile, $newCryptKey)) {
 				++$preservedExisting;
 				continue;
 			}
@@ -1216,14 +1216,14 @@ class FetchController extends Controller {
 				continue;
 			}
 
-			$this->writeNextSnapMailPgpBackupKeyFile($targetFile, $plainKey, $newCryptKey);
+			$this->writeSnapMailLTPgpBackupKeyFile($targetFile, $plainKey, $newCryptKey);
 			++$converted;
 		}
 
 		return [
 			$this->l->t('PGP backup migration completed.'),
 			$this->l->t('Converted PGP private key backups') . ': ' . $converted,
-			$this->l->t('Preserved existing NextSnapMail PGP private key backups') . ': ' . $preservedExisting,
+			$this->l->t('Preserved existing SnapMail LT PGP private key backups') . ': ' . $preservedExisting,
 			$this->l->t('Skipped PGP private key backups') . ': ' . $skipped
 		];
 	}
@@ -1279,9 +1279,9 @@ class FetchController extends Controller {
 		return null;
 	}
 
-	private function deleteNextSnapMailAccountForReimport(): array {
+	private function deleteSnapMailLTAccountForReimport(): array {
 		$oldAccounts = $this->getOldSnappyMailAccounts();
-		$uids = $_POST['nextsnapmail-delete-account-uid'] ?? [];
+		$uids = $_POST['snapmail_lt-delete-account-uid'] ?? [];
 		if (!\is_array($uids)) {
 			$uids = [$uids];
 		}
@@ -1299,17 +1299,17 @@ class FetchController extends Controller {
 				$lines[] = $this->l->t('Skipped unknown account') . ': ' . $uid;
 				continue;
 			}
-			$this->config->deleteUserValue($uid, 'nextsnapmail', 'nextsnapmail-email');
-			$this->config->deleteUserValue($uid, 'nextsnapmail', 'passphrase');
-			$this->config->deleteUserValue($uid, 'nextsnapmail', 'nextsnapmail-password');
-			$lines[] = $this->l->t('Deleted NextSnapMail account data for reimport') . ': ' . $uid;
+			$this->config->deleteUserValue($uid, 'snapmail_lt', 'snapmail_lt-email');
+			$this->config->deleteUserValue($uid, 'snapmail_lt', 'passphrase');
+			$this->config->deleteUserValue($uid, 'snapmail_lt', 'snapmail_lt-password');
+			$lines[] = $this->l->t('Deleted SnapMail LT account data for reimport') . ': ' . $uid;
 		}
 
 		return $lines;
 	}
 
 	private function deleteOldSnappyMailData(): array {
-		$confirmation = (string) ($_POST['nextsnapmail-delete-old-snappymail-confirmation'] ?? '');
+		$confirmation = (string) ($_POST['snapmail_lt-delete-old-snappymail-confirmation'] ?? '');
 		if (!\hash_equals(self::DELETE_OLD_SNAPPYMAIL_CONFIRMATION, $confirmation)) {
 			return [$this->l->t('Old SnappyMail data was not deleted because the confirmation code was missing or invalid.')];
 		}
@@ -1336,25 +1336,25 @@ class FetchController extends Controller {
 		return $lines;
 	}
 
-	private function resetNextSnapMailData(): array {
-		$confirmation = (string) ($_POST['nextsnapmail-reset-confirmation'] ?? '');
-		if (!\hash_equals(self::RESET_NEXTSNAPMAIL_CONFIRMATION, $confirmation)) {
-			return [$this->l->t('NextSnapMail data was not reset because the confirmation code was missing or invalid.')];
+	private function resetSnapMailLTData(): array {
+		$confirmation = (string) ($_POST['snapmail_lt-reset-confirmation'] ?? '');
+		if (!\hash_equals(self::RESET_SNAPMAIL_LT_CONFIRMATION, $confirmation)) {
+			return [$this->l->t('SnapMail LT data was not reset because the confirmation code was missing or invalid.')];
 		}
 
 		$lines = [];
-		$this->clearNextSnapMailRuntimeSession();
+		$this->clearSnapMailLTRuntimeSession();
 
 		$db = \OC::$server->get(\OCP\IDBConnection::class);
 		$qb = $db->getQueryBuilder();
 		$query = $qb->delete('preferences')
-			->where($qb->expr()->eq('appid', $qb->createNamedParameter('nextsnapmail')));
+			->where($qb->expr()->eq('appid', $qb->createNamedParameter('snapmail_lt')));
 		$deletedPreferences = $query->executeStatement();
 
-		$lines[] = $this->l->t('Deleted NextSnapMail database entries') . ': ' . $deletedPreferences;
-		$deletedAppConfig = $this->deleteNextSnapMailAppConfig();
+		$lines[] = $this->l->t('Deleted SnapMail LT database entries') . ': ' . $deletedPreferences;
+		$deletedAppConfig = $this->deleteSnapMailLTAppConfig();
 		if ($deletedAppConfig) {
-			$lines[] = $this->l->t('Deleted NextSnapMail app configuration entries') . ': ' . $deletedAppConfig;
+			$lines[] = $this->l->t('Deleted SnapMail LT app configuration entries') . ': ' . $deletedAppConfig;
 		}
 
 		$paths = $this->getAppDataImportPaths();
@@ -1362,48 +1362,48 @@ class FetchController extends Controller {
 			? (string) \file_get_contents($paths['target'] . '/SALT.php')
 			: '';
 		if (\is_dir($paths['target'])) {
-			$this->deleteDirectory($paths['target'], 'appdata_nextsnapmail');
-			$lines[] = $this->l->t('Deleted NextSnapMail app data folder') . ': ' . $paths['target'];
+			$this->deleteDirectory($paths['target'], 'appdata_snapmail_lt');
+			$lines[] = $this->l->t('Deleted SnapMail LT app data folder') . ': ' . $paths['target'];
 		} else {
-			$lines[] = $this->l->t('NextSnapMail app data folder was not found.');
+			$lines[] = $this->l->t('SnapMail LT app data folder was not found.');
 		}
 
-		foreach ($this->initializeNextSnapMailDataAfterReset($existingSalt) as $line) {
+		foreach ($this->initializeSnapMailLTDataAfterReset($existingSalt) as $line) {
 			$lines[] = $line;
 		}
 
-		$lines[] = $this->l->t('NextSnapMail reset completed. Reload the page before using the app again.');
+		$lines[] = $this->l->t('SnapMail LT reset completed. Reload the page before using the app again.');
 
 		return $lines;
 	}
 
-	private function deleteNextSnapMailAppConfig(): int {
+	private function deleteSnapMailLTAppConfig(): int {
 		$keys = [
 			'gmail-oauth-client-id',
 			'gmail-oauth-client-secret',
 			'gmail-oauth-domains',
 			'gmail-oauth-auto-configure',
-			'nextsnapmail-autologin',
-			'nextsnapmail-autologin-with-email',
-			'nextsnapmail-no-embed',
-			'nextsnapmail-debug',
-			'nextsnapmail-force-language'
+			'snapmail_lt-autologin',
+			'snapmail_lt-autologin-with-email',
+			'snapmail_lt-no-embed',
+			'snapmail_lt-debug',
+			'snapmail_lt-force-language'
 		];
 		$deleted = 0;
 		foreach ($keys as $key) {
-			if ('' !== $this->config->getAppValue('nextsnapmail', $key, '')) {
+			if ('' !== $this->config->getAppValue('snapmail_lt', $key, '')) {
 				++$deleted;
 			}
-			$this->config->deleteAppValue('nextsnapmail', $key);
+			$this->config->deleteAppValue('snapmail_lt', $key);
 		}
 
 		return $deleted;
 	}
 
-	private function clearNextSnapMailRuntimeSession(): void {
+	private function clearSnapMailLTRuntimeSession(): void {
 		try {
 			$session = \OC::$server->get(\OCP\ISession::class);
-			foreach (['nextsnapmail-passphrase', 'nextsnapmail-nc-uid'] as $key) {
+			foreach (['snapmail_lt-passphrase', 'snapmail_lt-nc-uid'] as $key) {
 				if (\method_exists($session, 'remove')) {
 					$session->remove($key);
 				}
@@ -1431,14 +1431,14 @@ class FetchController extends Controller {
 		}
 	}
 
-	private function initializeNextSnapMailDataAfterReset(string $existingSalt): array {
+	private function initializeSnapMailLTDataAfterReset(string $existingSalt): array {
 		$paths = $this->getAppDataImportPaths();
 		$target = $this->normalizePath($paths['target']);
 		$privateData = $target . '/_data_/_default_/';
 		$lines = [];
 
 		if (!\is_dir($target) && !\mkdir($target, 0700, true) && !\is_dir($target)) {
-			throw new \RuntimeException($this->l->t('Could not create NextSnapMail app data folder.') . ': ' . $target);
+			throw new \RuntimeException($this->l->t('Could not create SnapMail LT app data folder.') . ': ' . $target);
 		}
 
 		if ('' !== $existingSalt) {
@@ -1471,9 +1471,9 @@ class FetchController extends Controller {
 		$lines[] = $this->l->t('Reinstalled the required Nextcloud extension.');
 
 		$oConfig = \RainLoop\Api::Config();
-		$oConfig->Set('webmail', 'app_path', $this->appManager->getAppWebPath('nextsnapmail') . '/app/');
+		$oConfig->Set('webmail', 'app_path', $this->appManager->getAppWebPath('snapmail_lt') . '/app/');
 		$oConfig->Set('webmail', 'allow_languages_on_settings', false);
-		$oConfig->Set('webmail', 'loading_description', 'NextSnapMail - based on SnappyMail');
+		$oConfig->Set('webmail', 'loading_description', 'SnapMail LT - based on SnappyMail');
 		$oConfig->Set('login', 'allow_languages_on_login', false);
 		$oConfig->Set('plugins', 'enable', true);
 		$oConfig->Set('plugins', 'enabled_list', 'nextcloud');
@@ -1485,7 +1485,7 @@ class FetchController extends Controller {
 		\RainLoop\Utils::saveFile($privateData . 'admin_password.txt', $sPassword . "\n");
 
 		if (!$oConfig->Save()) {
-			throw new \RuntimeException($this->l->t('Could not save NextSnapMail configuration after reset.'));
+			throw new \RuntimeException($this->l->t('Could not save SnapMail LT configuration after reset.'));
 		}
 
 		$oProvider = \RainLoop\Api::Actions()->DomainProvider();
@@ -1502,7 +1502,7 @@ class FetchController extends Controller {
 		$oDomain->SmtpSettings()->shortLogin = true;
 		$oProvider->Save($oDomain);
 
-		$lines[] = $this->l->t('Created fresh NextSnapMail app data folder.') . ': ' . $target;
+		$lines[] = $this->l->t('Created fresh SnapMail LT app data folder.') . ': ' . $target;
 
 		return $lines;
 	}
@@ -1547,7 +1547,7 @@ class FetchController extends Controller {
 			throw new \RuntimeException($this->l->t('Refusing to delete unexpected folder'));
 		}
 
-		if (!\in_array($allowedFolderName, ['appdata_snappymail', 'appdata_nextsnapmail'], true)) {
+		if (!\in_array($allowedFolderName, ['appdata_snappymail', 'appdata_snapmail_lt'], true)) {
 			throw new \RuntimeException($this->l->t('Refusing to delete unexpected folder') . ': ' . $allowedFolderName);
 		}
 
@@ -1613,7 +1613,7 @@ class FetchController extends Controller {
 	}
 
 	private function importSelectedOldSnappyMailAccounts(): array {
-		$selected = $_POST['nextsnapmail-selected-accounts'] ?? [];
+		$selected = $_POST['snapmail_lt-selected-accounts'] ?? [];
 		if (!\is_array($selected)) {
 			$selected = [$selected];
 		}
@@ -1621,7 +1621,7 @@ class FetchController extends Controller {
 		$selected = \array_values(\array_unique(\array_filter(\array_map('strval', $selected), static function ($uid) {
 			return '' !== $uid;
 		})));
-		$importAppData = !empty($_POST['nextsnapmail-import-appdata']);
+		$importAppData = !empty($_POST['snapmail_lt-import-appdata']);
 		if (!$selected && !$importAppData) {
 			return [$this->l->t('No accounts were selected for import.')];
 		}
@@ -1640,8 +1640,8 @@ class FetchController extends Controller {
 			$skipped = [];
 
 			if ('' !== $account['email']) {
-				$emailExisted = '' !== $this->config->getUserValue($uid, 'nextsnapmail', 'nextsnapmail-email', '');
-				$this->config->setUserValue($uid, 'nextsnapmail', 'nextsnapmail-email', $account['email']);
+				$emailExisted = '' !== $this->config->getUserValue($uid, 'snapmail_lt', 'snapmail_lt-email', '');
+				$this->config->setUserValue($uid, 'snapmail_lt', 'snapmail_lt-email', $account['email']);
 				$changes[] = $emailExisted
 					? $this->l->t('email address overwritten')
 					: $this->l->t('email address');
@@ -1649,7 +1649,7 @@ class FetchController extends Controller {
 				$skipped[] = $this->l->t('no email address found');
 			}
 
-			$passphraseExisted = '' !== $this->config->getUserValue($uid, 'nextsnapmail', 'passphrase', '');
+			$passphraseExisted = '' !== $this->config->getUserValue($uid, 'snapmail_lt', 'passphrase', '');
 			$passphrase = $this->config->getUserValue($uid, 'snappymail', 'passphrase', '');
 			if ('' === $passphrase) {
 				$passphrase = $this->config->getUserValue($uid, 'snappymail', 'snappymail-password', '');
@@ -1658,9 +1658,9 @@ class FetchController extends Controller {
 			if ('' !== $passphrase) {
 				$password = $this->decryptOldSnappyMailPassphrase($passphrase, $account['email']);
 				if (null !== $password) {
-					$this->config->setUserValue($uid, 'nextsnapmail', 'passphrase',
+					$this->config->setUserValue($uid, 'snapmail_lt', 'passphrase',
 						SnappyMailHelper::encodePassword($password, \md5($account['email'])));
-					$cryptKeyState = $this->prepareNextSnapMailMainCryptKey($account['email'], $password);
+					$cryptKeyState = $this->prepareSnapMailLTMainCryptKey($account['email'], $password);
 					$changes[] = $passphraseExisted
 						? $this->l->t('password/passphrase overwritten')
 						: $this->l->t('password/passphrase');
@@ -1702,7 +1702,7 @@ class FetchController extends Controller {
 		}
 
 		$lines[] = '';
-		$lines[] = $this->l->t('Selected existing NextSnapMail values were overwritten.');
+		$lines[] = $this->l->t('Selected existing SnapMail LT values were overwritten.');
 
 		if ($importAppData) {
 			$lines[] = '';
@@ -1720,15 +1720,15 @@ class FetchController extends Controller {
 	public function setPersonal(): JSONResponse {
 		try {
 			$sEmail = '';
-			if (isset($_POST['appname'], $_POST['nextsnapmail-password'], $_POST['nextsnapmail-email']) && 'nextsnapmail' === $_POST['appname']) {
+			if (isset($_POST['appname'], $_POST['snapmail_lt-password'], $_POST['snapmail_lt-email']) && 'snapmail_lt' === $_POST['appname']) {
 				$sUser = \OC::$server->get(\OCP\IUserSession::class)->getUser()->getUID();
 
-				$sEmail = $_POST['nextsnapmail-email'];
-				$this->config->setUserValue($sUser, 'nextsnapmail', 'nextsnapmail-email', $sEmail);
+				$sEmail = $_POST['snapmail_lt-email'];
+				$this->config->setUserValue($sUser, 'snapmail_lt', 'snapmail_lt-email', $sEmail);
 
-				$sPass = $_POST['nextsnapmail-password'];
+				$sPass = $_POST['snapmail_lt-password'];
 				if ('******' !== $sPass) {
-					$this->config->setUserValue($sUser, 'nextsnapmail', 'passphrase',
+					$this->config->setUserValue($sUser, 'snapmail_lt', 'passphrase',
 						$sPass ? SnappyMailHelper::encodePassword($sPass, \md5($sEmail)) : '');
 				}
 			} else {

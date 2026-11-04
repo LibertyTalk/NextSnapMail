@@ -9,7 +9,7 @@
 			<td>
 				<div>
 					<span class="package-name" data-bind="text: name"></span>
-					<a class="package-configure nextsnapmail-package-action" data-bind="visible: installed" data-i18n="[title]TAB_PACKAGES/ACTION_CONFIGURE"><span class="nextsnapmail-material-icon nextsnapmail-icon-cog" aria-hidden="true"></span></a>
+					<a class="package-configure snapmail_lt-package-action" data-bind="visible: installed" data-i18n="[title]TAB_PACKAGES/ACTION_CONFIGURE"><span class="snapmail_lt-material-icon snapmail_lt-icon-cog" aria-hidden="true"></span></a>
 					<a class="package-active" role="switch" data-bind="visible: installed, attr: {'aria-label': name, 'aria-checked': enabled() ? 'true' : 'false'}"><span aria-hidden="true"></span></a>
 					<span class="package-installed" data-bind="text: installed"></span>
 				</div>
@@ -17,8 +17,8 @@
 			</td>
 			<td data-bind="text: version"></td>
 			<td>
-				<a class="nextsnapmail-package-action" data-bind="visible: !loading() && canBeUpdated, click: function () { $root.installPackage($data); }" data-i18n="[title]TAB_PACKAGES/ACTION_INSTALL"><span class="nextsnapmail-material-icon nextsnapmail-icon-download" aria-hidden="true"></span></a>
-				<a class="nextsnapmail-package-action nextsnapmail-package-action-delete" data-bind="visible: !loading() && canBeDeleted, click: function () { $root.deletePackage($data); }" data-i18n="[title]TAB_PACKAGES/ACTION_DELETE"><span class="nextsnapmail-material-icon nextsnapmail-icon-delete" aria-hidden="true"></span></a>
+				<a class="snapmail_lt-package-action" data-bind="visible: !loading() && canBeUpdated, click: function () { $root.installPackage($data); }" data-i18n="[title]TAB_PACKAGES/ACTION_INSTALL"><span class="snapmail_lt-material-icon snapmail_lt-icon-download" aria-hidden="true"></span></a>
+				<a class="snapmail_lt-package-action snapmail_lt-package-action-delete" data-bind="visible: !loading() && canBeDeleted, click: function () { $root.deletePackage($data); }" data-i18n="[title]TAB_PACKAGES/ACTION_DELETE"><span class="snapmail_lt-material-icon snapmail_lt-icon-delete" aria-hidden="true"></span></a>
 				<i class="icon-spinner" data-bind="visible: loading"></i>
 			</td>
 		</tr>

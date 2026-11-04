@@ -566,12 +566,12 @@
 	}
 
 	const
-		SIEVE_FILE_NAME = 'nextsnapmail.user',
+		SIEVE_FILE_NAME = 'snapmail_lt.user',
 		LEGACY_SIEVE_FILE_NAME = 'rainloop.user',
-		NEXTSNAPMAIL_VACATION_BLOCK_REGEX = /^# BEGIN:NEXTSNAPMAIL:VACATION\s*$[\s\S]*?^# END:NEXTSNAPMAIL:VACATION\s*$/gm;
+		SNAPMAIL_LT_VACATION_BLOCK_REGEX = /^# BEGIN:SNAPMAIL_LT:VACATION\s*$[\s\S]*?^# END:SNAPMAIL_LT:VACATION\s*$/gm;
 
 	const managedVacationBlock = script => {
-		const match = (script || '').match(NEXTSNAPMAIL_VACATION_BLOCK_REGEX);
+		const match = (script || '').match(SNAPMAIL_LT_VACATION_BLOCK_REGEX);
 		return match?.[0] || '';
 	};
 
@@ -599,9 +599,9 @@
 			split = /.{0,74}/g,
 			require = {},
 			parts = [
-				'# This is a NextSnapMail Sieve script.',
+				'# This is a SnapMail LT Sieve script.',
 				'# Please do not edit managed sections manually.',
-				'# NEXTSNAPMAIL:SIEVE',
+				'# SNAPMAIL_LT:SIEVE',
 				''
 			];
 
@@ -822,7 +822,7 @@
 			filters = [],
 			json,
 			filter;
-		if (script.length && (script.includes('NEXTSNAPMAIL:SIEVE') || script.includes('RAINLOOP:SIEVE'))) {
+		if (script.length && (script.includes('SNAPMAIL_LT:SIEVE') || script.includes('RAINLOOP:SIEVE'))) {
 			while ((json = regex.exec(script))) {
 				json = decodeURIComponent(escape(atob(json[1].replace(/\s+/g, ''))));
 				if (json && json.length && (json = JSON.parse(json))) {
@@ -889,7 +889,7 @@
 		}
 
 		/**
-		 * NextSnapMail's script and the legacy RainLoop script support filters.
+		 * SnapMail LT's script and the legacy RainLoop script support filters.
 		 */
 		allowFilters() {
 			return [SIEVE_FILE_NAME, LEGACY_SIEVE_FILE_NAME].includes(this.name());
@@ -903,7 +903,7 @@
 			return LEGACY_SIEVE_FILE_NAME === this.name();
 		}
 
-		migrateToNextSnapMail() {
+		migrateToSnapMailLT() {
 			window.Sieve.migrateLegacyScript(this);
 		}
 

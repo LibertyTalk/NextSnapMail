@@ -11,27 +11,27 @@ document.onreadystatechange = () => {
 	if (document.readyState === 'complete') {
 		watchIFrameTitle();
 		passThemesToIFrame();
-		let form = document.querySelector('form.nextsnapmail');
+		let form = document.querySelector('form.snapmail_lt');
 		form && SnappyMailFormHelper(form);
 		setupSnappyMailImportPreview();
-		setupNextSnapMailReset();
-		setupNextSnapMailPluginUpload();
+		setupSnapMailLTReset();
+		setupSnapMailLTPluginUpload();
 		setupUnifiedSearchListener()
 	}
 };
 
 function setupIntegratedAdminFrame()
 {
-	const iframe = document.getElementById('nextsnapmail-admin-frame');
+	const iframe = document.getElementById('snapmail_lt-admin-frame');
 	if (!iframe) {
 		return;
 	}
-	const workspace = document.querySelector('[data-nextsnapmail-admin-workspace]');
-	const saveArea = document.querySelector('[data-nextsnapmail-save-area]');
-	const pageButtons = [...document.querySelectorAll('[data-nextsnapmail-page]')];
-	const pagePanels = [...document.querySelectorAll('[data-nextsnapmail-panel]')];
-	const contextPanels = [...document.querySelectorAll('[data-nextsnapmail-context]')];
-	const routeButtons = [...document.querySelectorAll('[data-nextsnapmail-admin-route]')];
+	const workspace = document.querySelector('[data-snapmail_lt-admin-workspace]');
+	const saveArea = document.querySelector('[data-snapmail_lt-save-area]');
+	const pageButtons = [...document.querySelectorAll('[data-snapmail_lt-page]')];
+	const pagePanels = [...document.querySelectorAll('[data-snapmail_lt-panel]')];
+	const contextPanels = [...document.querySelectorAll('[data-snapmail_lt-context]')];
+	const routeButtons = [...document.querySelectorAll('[data-snapmail_lt-admin-route]')];
 	const embeddedPages = new Set(['domains', 'webmail', 'extensions']);
 	const savePages = new Set(['domains', 'integration']);
 	let webmailRoute = 'general';
@@ -44,22 +44,22 @@ function setupIntegratedAdminFrame()
 	};
 
 	const showPage = page => {
-		if (!pageButtons.some(button => button.dataset.nextsnapmailPage === page)) {
+		if (!pageButtons.some(button => button.dataset.snapmail_ltPage === page)) {
 			page = 'domains';
 		}
 
 		pageButtons.forEach(button => {
-			const active = button.dataset.nextsnapmailPage === page;
+			const active = button.dataset.snapmail_ltPage === page;
 			button.classList.toggle('active', active);
 			button.setAttribute('aria-current', active ? 'page' : 'false');
 		});
 		pagePanels.forEach(panel => {
-			const active = panel.dataset.nextsnapmailPanel === page;
+			const active = panel.dataset.snapmail_ltPanel === page;
 			panel.hidden = !active;
 			panel.classList.toggle('active', active);
 		});
 		contextPanels.forEach(panel => {
-			const active = panel.dataset.nextsnapmailContext === page;
+			const active = panel.dataset.snapmail_ltContext === page;
 			panel.hidden = !active;
 			panel.classList.toggle('active', active);
 		});
@@ -80,18 +80,18 @@ function setupIntegratedAdminFrame()
 		}
 
 		try {
-			sessionStorage.setItem('nextsnapmail-admin-page', page);
+			sessionStorage.setItem('snapmail_lt-admin-page', page);
 		} catch (error) {
 			// Storage may be disabled without affecting the settings page.
 		}
 	};
 
 	pageButtons.forEach(button => button.addEventListener('click', () => {
-		showPage(button.dataset.nextsnapmailPage);
+		showPage(button.dataset.snapmail_ltPage);
 	}));
 
 	routeButtons.forEach(button => button.addEventListener('click', () => {
-		webmailRoute = button.dataset.nextsnapmailAdminRoute || 'general';
+		webmailRoute = button.dataset.snapmail_ltAdminRoute || 'general';
 		routeButtons.forEach(candidate => candidate.classList.toggle('active', candidate === button));
 		setAdminRoute(webmailRoute);
 	}));
@@ -99,11 +99,11 @@ function setupIntegratedAdminFrame()
 	iframe.addEventListener('load', () => {
 		try {
 			const iframeDocument = iframe.contentDocument;
-			iframeDocument?.documentElement?.classList.add('nextsnapmail-integrated-admin-document');
-			iframeDocument?.body?.classList.add('nextsnapmail-integrated-admin-body');
-			if (iframeDocument && !iframeDocument.getElementById('nextsnapmail-integrated-admin-style')) {
+			iframeDocument?.documentElement?.classList.add('snapmail_lt-integrated-admin-document');
+			iframeDocument?.body?.classList.add('snapmail_lt-integrated-admin-body');
+			if (iframeDocument && !iframeDocument.getElementById('snapmail_lt-integrated-admin-style')) {
 				const style = iframeDocument.createElement('style');
-				style.id = 'nextsnapmail-integrated-admin-style';
+				style.id = 'snapmail_lt-integrated-admin-style';
 				style.textContent = `
 					#rl-left, #V-AdminPane > .b-toolbar { display: none !important; }
 					#rl-right { min-width: 100% !important; }
@@ -115,7 +115,7 @@ function setupIntegratedAdminFrame()
 				`;
 				iframeDocument.head.appendChild(style);
 			}
-			const activePage = pageButtons.find(button => button.classList.contains('active'))?.dataset.nextsnapmailPage;
+			const activePage = pageButtons.find(button => button.classList.contains('active'))?.dataset.snapmail_ltPage;
 			if ('extensions' === activePage) {
 				setAdminRoute('packages');
 			} else if ('webmail' === activePage) {
@@ -124,13 +124,13 @@ function setupIntegratedAdminFrame()
 				setAdminRoute('domains');
 			}
 		} catch (error) {
-			console.warn('Could not prepare integrated NextSnapMail administration.', error);
+			console.warn('Could not prepare integrated SnapMail LT administration.', error);
 		}
 	});
 
 	let initialPage = 'domains';
 	try {
-		initialPage = sessionStorage.getItem('nextsnapmail-admin-page') || initialPage;
+		initialPage = sessionStorage.getItem('snapmail_lt-admin-page') || initialPage;
 	} catch (error) {
 		// Keep the default page when storage is unavailable.
 	}
@@ -195,9 +195,9 @@ function watchIFrameTitle() {
 		if (title) {
 			let matches = title.match(/\(([0-9]+)\)/);
 			if (matches) {
-				document.title = '('+ matches[1] + ') ' + t('nextsnapmail', 'Email') + ' - Nextcloud';
+				document.title = '('+ matches[1] + ') ' + t('snapmail_lt', 'Email') + ' - Nextcloud';
 			} else {
-				document.title = t('nextsnapmail', 'Email') + ' - Nextcloud';
+				document.title = t('snapmail_lt', 'Email') + ' - Nextcloud';
 			}
 		}
 	});
@@ -209,25 +209,25 @@ function SnappyMailFormHelper(oForm)
 	try
 	{
 		var
-			oSubmit = document.getElementById('nextsnapmail-save-button'),
+			oSubmit = document.getElementById('snapmail_lt-save-button'),
 			sSubmitValue = oSubmit.textContent,
-			oDesc = oForm.querySelector('.nextsnapmail-result-desc')
+			oDesc = oForm.querySelector('.snapmail_lt-result-desc')
 		;
 
 		oForm.addEventListener('submit', oEvent => {
 			oEvent.preventDefault();
 
-			oForm.classList.add('nextsnapmail-fetch')
-			oForm.classList.remove('nextsnapmail-error')
-			oForm.classList.remove('nextsnapmail-success')
+			oForm.classList.add('snapmail_lt-fetch')
+			oForm.classList.remove('snapmail_lt-error')
+			oForm.classList.remove('snapmail_lt-success')
 
 			oDesc.textContent = '';
 			oSubmit.textContent = '...';
 
 			let data = new FormData(oForm);
-			data.set('appname', 'nextsnapmail');
+			data.set('appname', 'snapmail_lt');
 
-			fetch(OC.filePath('nextsnapmail', 'fetch', oForm.getAttribute('action')), {
+			fetch(OC.filePath('snapmail_lt', 'fetch', oForm.getAttribute('action')), {
 				mode: 'same-origin',
 				cache: 'no-cache',
 				redirect: 'error',
@@ -240,17 +240,17 @@ function SnappyMailFormHelper(oForm)
 			.then(response => response.json())
 			.then(oData => {
 				let bResult = 'success' === oData?.status;
-				oForm.classList.remove('nextsnapmail-fetch');
+				oForm.classList.remove('snapmail_lt-fetch');
 				oSubmit.textContent = sSubmitValue;
 				if (oData?.Message) {
-					oDesc.textContent = t('nextsnapmail', oData.Message);
+					oDesc.textContent = t('snapmail_lt', oData.Message);
 				}
 				if (bResult) {
-					oForm.classList.add('nextsnapmail-success');
+					oForm.classList.add('snapmail_lt-success');
 				} else {
-					oForm.classList.add('nextsnapmail-error');
+					oForm.classList.add('snapmail_lt-error');
 					if ('' === oDesc.textContent) {
-						oDesc.textContent = t('nextsnapmail', 'Error');
+						oDesc.textContent = t('snapmail_lt', 'Error');
 					}
 				}
 			});
@@ -264,12 +264,12 @@ function SnappyMailFormHelper(oForm)
 
 function setupSnappyMailImportPreview()
 {
-	const button = document.getElementById('nextsnapmail-import-snappymail-button');
+	const button = document.getElementById('snapmail_lt-import-snappymail-button');
 	if (!button) {
 		return;
 	}
 
-	const result = document.querySelector('.nextsnapmail-import-result-desc');
+	const result = document.querySelector('.snapmail_lt-import-result-desc');
 	button.addEventListener('click', event => {
 		event.preventDefault();
 
@@ -279,8 +279,8 @@ function setupSnappyMailImportPreview()
 			result.textContent = '';
 		}
 
-		nextsnapmailAdminRequest({
-			'nextsnapmail-list-old-snappymail-accounts': '1'
+		snapmail_ltAdminRequest({
+			'snapmail_lt-list-old-snappymail-accounts': '1'
 		})
 		.then(response => response.json())
 		.then(data => {
@@ -290,32 +290,32 @@ function setupSnappyMailImportPreview()
 		.catch(error => {
 			button.textContent = originalText;
 			if (result) {
-				result.textContent = error?.message || t('nextsnapmail', 'Error');
+				result.textContent = error?.message || t('snapmail_lt', 'Error');
 			}
 		});
 	});
 }
 
-function setupNextSnapMailReset()
+function setupSnapMailLTReset()
 {
-	const button = document.getElementById('nextsnapmail-reset-button');
+	const button = document.getElementById('snapmail_lt-reset-button');
 	if (!button) {
 		return;
 	}
 
-	const result = document.querySelector('.nextsnapmail-reset-result-desc');
+	const result = document.querySelector('.snapmail_lt-reset-result-desc');
 	button.addEventListener('click', event => {
 		event.preventDefault();
 
-		if (!confirm(t('nextsnapmail', 'Do you really want to remove all accounts from the database and delete the data folder?'))) {
+		if (!confirm(t('snapmail_lt', 'Do you really want to remove all accounts from the database and delete the data folder?'))) {
 			return;
 		}
 
 		const confirmationCode = 'RESET';
-		const confirmation = prompt(t('nextsnapmail', 'To confirm reset, type: {code}', {code: confirmationCode}));
+		const confirmation = prompt(t('snapmail_lt', 'To confirm reset, type: {code}', {code: confirmationCode}));
 		if (confirmation !== confirmationCode) {
 			if (result) {
-				result.textContent = t('nextsnapmail', 'NextSnapMail data was not reset because the confirmation code was missing or invalid.');
+				result.textContent = t('snapmail_lt', 'SnapMail LT data was not reset because the confirmation code was missing or invalid.');
 			}
 			return;
 		}
@@ -326,9 +326,9 @@ function setupNextSnapMailReset()
 			result.textContent = '';
 		}
 
-		nextsnapmailAdminRequest({
-			'nextsnapmail-reset-data': '1',
-			'nextsnapmail-reset-confirmation': confirmation
+		snapmail_ltAdminRequest({
+			'snapmail_lt-reset-data': '1',
+			'snapmail_lt-reset-confirmation': confirmation
 		})
 		.then(response => response.json())
 		.then(responseData => {
@@ -338,22 +338,22 @@ function setupNextSnapMailReset()
 		.catch(error => {
 			button.textContent = originalText;
 			if (result) {
-				result.textContent = error?.message || t('nextsnapmail', 'Error');
+				result.textContent = error?.message || t('snapmail_lt', 'Error');
 			}
 		});
 	});
 }
 
-function setupNextSnapMailPluginUpload()
+function setupSnapMailLTPluginUpload()
 {
-	const button = document.getElementById('nextsnapmail-upload-plugin-button');
+	const button = document.getElementById('snapmail_lt-upload-plugin-button');
 	if (!button) {
 		return;
 	}
 
-	const fileInput = document.getElementById('nextsnapmail-plugin-package');
-	const overwriteInput = document.getElementById('nextsnapmail-plugin-overwrite');
-	const result = document.querySelector('.nextsnapmail-plugin-upload-result-desc');
+	const fileInput = document.getElementById('snapmail_lt-plugin-package');
+	const overwriteInput = document.getElementById('snapmail_lt-plugin-overwrite');
+	const result = document.querySelector('.snapmail_lt-plugin-upload-result-desc');
 
 	button.addEventListener('click', event => {
 		event.preventDefault();
@@ -361,12 +361,12 @@ function setupNextSnapMailPluginUpload()
 		const file = fileInput?.files?.[0];
 		if (!file) {
 			if (result) {
-				result.textContent = t('nextsnapmail', 'Please select a plugin package first.');
+				result.textContent = t('snapmail_lt', 'Please select a plugin package first.');
 			}
 			return;
 		}
 
-		if (!confirm(t('nextsnapmail', 'Only upload trusted plugin packages. Plugins are executable PHP code. Continue?'))) {
+		if (!confirm(t('snapmail_lt', 'Only upload trusted plugin packages. Plugins are executable PHP code. Continue?'))) {
 			return;
 		}
 
@@ -377,11 +377,11 @@ function setupNextSnapMailPluginUpload()
 		}
 
 		const data = new FormData();
-		data.set('appname', 'nextsnapmail');
-		data.set('nextsnapmail-upload-plugin', '1');
-		data.set('nextsnapmail-plugin-package', file);
+		data.set('appname', 'snapmail_lt');
+		data.set('snapmail_lt-upload-plugin', '1');
+		data.set('snapmail_lt-plugin-package', file);
 		if (overwriteInput?.checked) {
-			data.set('nextsnapmail-plugin-overwrite', '1');
+			data.set('snapmail_lt-plugin-overwrite', '1');
 		}
 
 		const requestToken = document.getElementById('requesttoken');
@@ -389,7 +389,7 @@ function setupNextSnapMailPluginUpload()
 			data.set('requesttoken', requestToken.value);
 		}
 
-		fetch(OC.filePath('nextsnapmail', 'fetch', 'admin.php'), {
+		fetch(OC.filePath('snapmail_lt', 'fetch', 'admin.php'), {
 			mode: 'same-origin',
 			cache: 'no-cache',
 			redirect: 'error',
@@ -403,7 +403,7 @@ function setupNextSnapMailPluginUpload()
 		.then(data => {
 			button.textContent = originalText;
 			if (result) {
-				result.textContent = data?.Message || t('nextsnapmail', 'Error');
+				result.textContent = data?.Message || t('snapmail_lt', 'Error');
 			}
 			if ('success' === data?.status && fileInput) {
 				fileInput.value = '';
@@ -412,16 +412,16 @@ function setupNextSnapMailPluginUpload()
 		.catch(error => {
 			button.textContent = originalText;
 			if (result) {
-				result.textContent = error?.message || t('nextsnapmail', 'Error');
+				result.textContent = error?.message || t('snapmail_lt', 'Error');
 			}
 		});
 	});
 }
 
-function nextsnapmailAdminRequest(values)
+function snapmail_ltAdminRequest(values)
 {
 	const data = new FormData();
-	data.set('appname', 'nextsnapmail');
+	data.set('appname', 'snapmail_lt');
 	Object.keys(values).forEach(key => {
 		const value = values[key];
 		if (Array.isArray(value)) {
@@ -436,7 +436,7 @@ function nextsnapmailAdminRequest(values)
 		data.set('requesttoken', requestToken.value);
 	}
 
-	return fetch(OC.filePath('nextsnapmail', 'fetch', 'admin.php'), {
+	return fetch(OC.filePath('snapmail_lt', 'fetch', 'admin.php'), {
 		mode: 'same-origin',
 		cache: 'no-cache',
 		redirect: 'error',
@@ -458,7 +458,7 @@ function renderOldSnappyMailAccounts(data, container)
 
 	const message = document.createElement('p');
 	message.style.whiteSpace = 'pre-wrap';
-	message.textContent = data?.Message || t('nextsnapmail', 'Error');
+	message.textContent = data?.Message || t('snapmail_lt', 'Error');
 	container.appendChild(message);
 
 	if ('success' !== data?.status) {
@@ -478,11 +478,11 @@ function renderOldSnappyMailAccounts(data, container)
 	const thead = document.createElement('thead');
 	const headRow = document.createElement('tr');
 	[
-		t('nextsnapmail', 'Import'),
-		t('nextsnapmail', 'User'),
-		t('nextsnapmail', 'Email'),
-		t('nextsnapmail', 'Password'),
-		t('nextsnapmail', 'NextSnapMail account')
+		t('snapmail_lt', 'Import'),
+		t('snapmail_lt', 'User'),
+		t('snapmail_lt', 'Email'),
+		t('snapmail_lt', 'Password'),
+		t('snapmail_lt', 'SnapMail LT account')
 	].forEach(label => {
 		const th = document.createElement('th');
 		th.textContent = label;
@@ -498,17 +498,17 @@ function renderOldSnappyMailAccounts(data, container)
 		const selectCell = document.createElement('td');
 		const checkbox = document.createElement('input');
 		checkbox.type = 'checkbox';
-		checkbox.className = 'nextsnapmail-import-account-checkbox';
+		checkbox.className = 'snapmail_lt-import-account-checkbox';
 		checkbox.value = account.uid || '';
-		checkbox.checked = !account.nextsnapmailExists;
+		checkbox.checked = !account.snapmail_ltExists;
 		selectCell.appendChild(checkbox);
 		tr.appendChild(selectCell);
 
 		[
 			account.uid || '',
-			account.email || t('nextsnapmail', 'no email address found'),
-			account.hasPassword ? t('nextsnapmail', 'password/passphrase present') : t('nextsnapmail', 'no password/passphrase found'),
-			account.nextsnapmailExists ? t('nextsnapmail', 'already exists') : t('nextsnapmail', 'does not exist yet')
+			account.email || t('snapmail_lt', 'no email address found'),
+			account.hasPassword ? t('snapmail_lt', 'password/passphrase present') : t('snapmail_lt', 'no password/passphrase found'),
+			account.snapmail_ltExists ? t('snapmail_lt', 'already exists') : t('snapmail_lt', 'does not exist yet')
 		].forEach(value => {
 			const td = document.createElement('td');
 			td.textContent = value;
@@ -527,12 +527,12 @@ function renderOldSnappyMailAccounts(data, container)
 	toggleAll.type = 'checkbox';
 	toggleAll.checked = true;
 	toggleAll.addEventListener('change', () => {
-		container.querySelectorAll('.nextsnapmail-import-account-checkbox').forEach(checkbox => {
+		container.querySelectorAll('.snapmail_lt-import-account-checkbox').forEach(checkbox => {
 			checkbox.checked = toggleAll.checked;
 		});
 	});
 	toggleAllLabel.appendChild(toggleAll);
-	toggleAllLabel.appendChild(document.createTextNode(' ' + t('nextsnapmail', 'Select/deselect all')));
+	toggleAllLabel.appendChild(document.createTextNode(' ' + t('snapmail_lt', 'Select/deselect all')));
 	bulkCell.appendChild(toggleAllLabel);
 	bulkRow.appendChild(bulkCell);
 	tbody.appendChild(bulkRow);
@@ -541,16 +541,16 @@ function renderOldSnappyMailAccounts(data, container)
 
 	const importButton = document.createElement('button');
 	importButton.type = 'button';
-	importButton.textContent = t('nextsnapmail', 'Import selected from SnappyMail');
+	importButton.textContent = t('snapmail_lt', 'Import selected from SnappyMail');
 
 	const deleteButton = document.createElement('button');
 	deleteButton.type = 'button';
-	deleteButton.textContent = t('nextsnapmail', 'Remove selected NextSnapMail accounts');
+	deleteButton.textContent = t('snapmail_lt', 'Remove selected SnapMail LT accounts');
 	deleteButton.style.marginLeft = '8px';
 
 	const deleteOldDataButton = document.createElement('button');
 	deleteOldDataButton.type = 'button';
-	deleteOldDataButton.textContent = t('nextsnapmail', 'Delete old SnappyMail data');
+	deleteOldDataButton.textContent = t('snapmail_lt', 'Delete old SnappyMail data');
 	deleteOldDataButton.style.marginLeft = '24px';
 	deleteOldDataButton.style.backgroundColor = '#d32f2f';
 	deleteOldDataButton.style.borderColor = '#d32f2f';
@@ -565,13 +565,13 @@ function renderOldSnappyMailAccounts(data, container)
 	importButton.addEventListener('click', event => {
 		event.preventDefault();
 
-		const selected = [...container.querySelectorAll('.nextsnapmail-import-account-checkbox:checked')]
+		const selected = [...container.querySelectorAll('.snapmail_lt-import-account-checkbox:checked')]
 			.map(checkbox => checkbox.value)
 			.filter(Boolean);
 
 		if (!selected.length) {
 			const noSelection = document.createElement('p');
-			noSelection.textContent = t('nextsnapmail', 'No accounts were selected for import.');
+			noSelection.textContent = t('snapmail_lt', 'No accounts were selected for import.');
 			container.appendChild(noSelection);
 			return;
 		}
@@ -579,10 +579,10 @@ function renderOldSnappyMailAccounts(data, container)
 		const originalText = importButton.textContent;
 		importButton.textContent = '...';
 
-		nextsnapmailAdminRequest({
-			'nextsnapmail-import-selected-snappymail-accounts': '1',
-			'nextsnapmail-selected-accounts': selected,
-			'nextsnapmail-import-appdata': '1'
+		snapmail_ltAdminRequest({
+			'snapmail_lt-import-selected-snappymail-accounts': '1',
+			'snapmail_lt-selected-accounts': selected,
+			'snapmail_lt-import-appdata': '1'
 		})
 		.then(response => response.json())
 		.then(responseData => {
@@ -592,7 +592,7 @@ function renderOldSnappyMailAccounts(data, container)
 		.catch(error => {
 			importButton.textContent = originalText;
 			const errorMessage = document.createElement('p');
-			errorMessage.textContent = error?.message || t('nextsnapmail', 'Error');
+			errorMessage.textContent = error?.message || t('snapmail_lt', 'Error');
 			container.appendChild(errorMessage);
 		});
 	});
@@ -600,13 +600,13 @@ function renderOldSnappyMailAccounts(data, container)
 	deleteButton.addEventListener('click', event => {
 		event.preventDefault();
 
-		const selected = [...container.querySelectorAll('.nextsnapmail-import-account-checkbox:checked')]
+		const selected = [...container.querySelectorAll('.snapmail_lt-import-account-checkbox:checked')]
 			.map(checkbox => checkbox.value)
 			.filter(Boolean);
 
 		if (!selected.length) {
 			const noSelection = document.createElement('p');
-			noSelection.textContent = t('nextsnapmail', 'No accounts were selected for deletion.');
+			noSelection.textContent = t('snapmail_lt', 'No accounts were selected for deletion.');
 			container.appendChild(noSelection);
 			return;
 		}
@@ -614,9 +614,9 @@ function renderOldSnappyMailAccounts(data, container)
 		const originalText = deleteButton.textContent;
 		deleteButton.textContent = '...';
 
-		nextsnapmailAdminRequest({
-			'nextsnapmail-delete-imported-account': '1',
-			'nextsnapmail-delete-account-uid': selected
+		snapmail_ltAdminRequest({
+			'snapmail_lt-delete-imported-account': '1',
+			'snapmail_lt-delete-account-uid': selected
 		})
 		.then(response => response.json())
 		.then(responseData => {
@@ -626,7 +626,7 @@ function renderOldSnappyMailAccounts(data, container)
 		.catch(error => {
 			deleteButton.textContent = originalText;
 			const errorMessage = document.createElement('p');
-			errorMessage.textContent = error?.message || t('nextsnapmail', 'Error');
+			errorMessage.textContent = error?.message || t('snapmail_lt', 'Error');
 			container.appendChild(errorMessage);
 		});
 	});
@@ -634,14 +634,14 @@ function renderOldSnappyMailAccounts(data, container)
 	deleteOldDataButton.addEventListener('click', event => {
 		event.preventDefault();
 
-		if (!confirm(t('nextsnapmail', 'Do you really want to delete all old SnappyMail data (appdata and accounts in the database)?'))) {
+		if (!confirm(t('snapmail_lt', 'Do you really want to delete all old SnappyMail data (appdata and accounts in the database)?'))) {
 			return;
 		}
 		const confirmationCode = 'DELETE_SNAPPYMAIL_DATA';
-		const confirmation = prompt(t('nextsnapmail', 'To confirm deletion, type: {code}', {code: confirmationCode}));
+		const confirmation = prompt(t('snapmail_lt', 'To confirm deletion, type: {code}', {code: confirmationCode}));
 		if (confirmation !== confirmationCode) {
 			const cancelled = document.createElement('p');
-			cancelled.textContent = t('nextsnapmail', 'Old SnappyMail data was not deleted because the confirmation code was missing or invalid.');
+			cancelled.textContent = t('snapmail_lt', 'Old SnappyMail data was not deleted because the confirmation code was missing or invalid.');
 			container.appendChild(cancelled);
 			return;
 		}
@@ -649,9 +649,9 @@ function renderOldSnappyMailAccounts(data, container)
 		const originalText = deleteOldDataButton.textContent;
 		deleteOldDataButton.textContent = '...';
 
-		nextsnapmailAdminRequest({
-			'nextsnapmail-delete-old-snappymail-data': '1',
-			'nextsnapmail-delete-old-snappymail-confirmation': confirmation
+		snapmail_ltAdminRequest({
+			'snapmail_lt-delete-old-snappymail-data': '1',
+			'snapmail_lt-delete-old-snappymail-confirmation': confirmation
 		})
 		.then(response => response.json())
 		.then(responseData => {
@@ -661,7 +661,7 @@ function renderOldSnappyMailAccounts(data, container)
 		.catch(error => {
 			deleteOldDataButton.textContent = originalText;
 			const errorMessage = document.createElement('p');
-			errorMessage.textContent = error?.message || t('nextsnapmail', 'Error');
+			errorMessage.textContent = error?.message || t('snapmail_lt', 'Error');
 			container.appendChild(errorMessage);
 		});
 	});

@@ -1,9 +1,9 @@
 <?php
 
-namespace OCA\NextSnapMail\Controller;
+namespace OCA\SnapMailLT\Controller;
 
-use OCA\NextSnapMail\Util\SnappyMailHelper;
-use OCA\NextSnapMail\ContentSecurityPolicy;
+use OCA\SnapMailLT\Util\SnappyMailHelper;
+use OCA\SnapMailLT\ContentSecurityPolicy;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -30,13 +30,13 @@ class PageController extends Controller
 				return SnappyMailHelper::startApp(true);
 			}
 		}
-		if (!$bAdmin && $config->getAppValue('nextsnapmail', 'nextsnapmail-no-embed')) {
-			$navigationManager->setActiveEntry('nextsnapmail');
-			\OCP\Util::addScript('nextsnapmail', 'nextsnapmail');
-			\OCP\Util::addStyle('nextsnapmail', 'style');
+		if (!$bAdmin && $config->getAppValue('snapmail_lt', 'snapmail_lt-no-embed')) {
+			$navigationManager->setActiveEntry('snapmail_lt');
+			\OCP\Util::addScript('snapmail_lt', 'snapmail_lt');
+			\OCP\Util::addStyle('snapmail_lt', 'style');
 			SnappyMailHelper::startApp();
-			$response = new TemplateResponse('nextsnapmail', 'index', [
-				'nextsnapmail-iframe-url' => SnappyMailHelper::normalizeUrl(SnappyMailHelper::getAppUrl())
+			$response = new TemplateResponse('snapmail_lt', 'index', [
+				'snapmail_lt-iframe-url' => SnappyMailHelper::normalizeUrl(SnappyMailHelper::getAppUrl())
 					. (empty($_GET['target']) ? '' : "#{$_GET['target']}")
 			]);
 			$csp = new ContentSecurityPolicy();
@@ -86,25 +86,25 @@ class PageController extends Controller
 	{
 		$user = \OC::$server->get(\OCP\IUserSession::class)->getUser();
 		if (!$user || !\OC_User::isAdminUser($user->getUID())) {
-			throw new \RuntimeException('NextSnapMail administration requires a Nextcloud administrator session.');
+			throw new \RuntimeException('SnapMail LT administration requires a Nextcloud administrator session.');
 		}
 
 		SnappyMailHelper::loadApp();
 		$config = \RainLoop\Api::Config();
 		if (!$config->Get('security', 'allow_admin_panel', true)) {
-			throw new \RuntimeException('NextSnapMail administration is disabled.');
+			throw new \RuntimeException('SnapMail LT administration is disabled.');
 		}
 
 		$actions = \RainLoop\Api::Actions();
 		if (!$actions->IsAdminLoggined(false)) {
 			$random = \MailSo\Base\Utils::Sha1Rand();
 			if (!$actions->Cacher(null, true)->Set(\RainLoop\KeyPathHelper::SessionAdminKey($random), \time())) {
-				throw new \RuntimeException('Could not create the NextSnapMail administrator session.');
+				throw new \RuntimeException('Could not create the SnapMail LT administrator session.');
 			}
 
 			$token = \RainLoop\Utils::EncodeKeyValuesQ(['token', $random]);
 			if (!$token) {
-				throw new \RuntimeException('Could not encode the NextSnapMail administrator session.');
+				throw new \RuntimeException('Could not encode the SnapMail LT administrator session.');
 			}
 			\SnappyMail\Cookies::set('nsmadmin', $token);
 		}
@@ -155,9 +155,9 @@ class PageController extends Controller
 	private function renderEmbeddedApp(bool $bAdmin, bool $blank = false)
 	{
 		$navigationManager = \OC::$server->get(\OCP\INavigationManager::class);
-		$navigationManager->setActiveEntry('nextsnapmail');
+		$navigationManager->setActiveEntry('snapmail_lt');
 
-		\OCP\Util::addStyle('nextsnapmail', 'embed');
+		\OCP\Util::addStyle('snapmail_lt', 'embed');
 
 		SnappyMailHelper::startApp();
 		$oConfig = \RainLoop\Api::Config();
@@ -170,9 +170,9 @@ class PageController extends Controller
 
 		$csp = new ContentSecurityPolicy();
 		$sNonce = $csp->getSnappyMailNonce();
-		$sLoadingDescription = $oConfig->Get('webmail', 'loading_description', 'NextSnapMail - based on SnappyMail');
+		$sLoadingDescription = $oConfig->Get('webmail', 'loading_description', 'SnapMail LT - based on SnappyMail');
 		if ('SnappyMail' === $sLoadingDescription) {
-			$sLoadingDescription = 'NextSnapMail - based on SnappyMail';
+			$sLoadingDescription = 'SnapMail LT - based on SnappyMail';
 		}
 
 		$params = [
@@ -190,14 +190,14 @@ class PageController extends Controller
 			)
 		];
 
-//		\OCP\Util::addScript('nextsnapmail', '../app/snappymail/v/'.APP_VERSION.'/static/js'.($sAppJsMin ? '/min' : '').'/boot'.$sAppJsMin);
+//		\OCP\Util::addScript('snapmail_lt', '../app/snappymail/v/'.APP_VERSION.'/static/js'.($sAppJsMin ? '/min' : '').'/boot'.$sAppJsMin);
 
 		// Nextcloud html encodes, so addHeader('style') is not possible
 //		\OCP\Util::addHeader('style', ['id'=>'app-boot-css'], \file_get_contents(APP_VERSION_ROOT_PATH.'static/css/boot'.$sAppCssMin.'.css'));
 		\OCP\Util::addHeader('link', ['type'=>'text/css','rel'=>'stylesheet','href'=>\RainLoop\Utils::WebStaticPath('css/'.($bAdmin?'admin':'app').$sAppCssMin.'.css')], '');
 //		\OCP\Util::addHeader('style', ['id'=>'app-theme-style','data-href'=>$params['BaseAppThemeCssLink']], $params['BaseAppThemeCss']);
 
-		$response = new TemplateResponse('nextsnapmail', 'index_embed', $params, $blank ? 'blank' : 'user');
+		$response = new TemplateResponse('snapmail_lt', 'index_embed', $params, $blank ? 'blank' : 'user');
 
 		$response->setContentSecurityPolicy($csp->getPolicy());
 

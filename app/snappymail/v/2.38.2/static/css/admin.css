@@ -1387,7 +1387,7 @@ html.rl-started-trigger .LoginView {
 	max-width: none;
 	font-weight: 600;
 }
-#V-PopupsDomain .domain-test-result.nextsnapmail-test-success {
+#V-PopupsDomain .domain-test-result.snapmail_lt-test-success {
 	background-color: #edf7ed;
 	border-color: #4f9153;
 	color: #256029;

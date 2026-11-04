@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace OCA\NextSnapMail\Search;
+namespace OCA\SnapMailLT\Search;
 
-use OCA\NextSnapMail\AppInfo\Application;
-use OCA\NextSnapMail\Util\SnappyMailHelper;
+use OCA\SnapMailLT\AppInfo\Application;
+use OCA\SnapMailLT\Util\SnappyMailHelper;
 use OCP\IDateTimeFormatter;
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -39,7 +39,7 @@ class Provider implements IProvider
 
 	public function getName(): string
 	{
-		return 'nextsnapmail';
+		return 'snapmail_lt';
 //		return $this->l10n->t('Mails');
 	}
 
@@ -90,9 +90,9 @@ class Provider implements IProvider
 			// instanceof \MailSo\Mail\MessageCollection
 			$MessageCollection = $oMailClient->MessageList($oParams);
 
-			$baseURL = $this->urlGenerator->linkToRoute('nextsnapmail.page.index');
+			$baseURL = $this->urlGenerator->linkToRoute('snapmail_lt.page.index');
 //			$config = \OC::$server->getConfig();
-//			if ($config->getAppValue('nextsnapmail', 'nextsnapmail-no-embed')) {
+//			if ($config->getAppValue('snapmail_lt', 'snapmail_lt-no-embed')) {
 //				$baseURL .= '?target=';
 //			} else {
 				$baseURL .= '#';
@@ -109,7 +109,7 @@ class Provider implements IProvider
 					$Message->Subject(),
 					// subline
 					$Message->From()->ToString(),
-					// resourceUrl /index.php/apps/nextsnapmail/#/mailbox/INBOX/p2/text=an&unseen
+					// resourceUrl /index.php/apps/snapmail_lt/#/mailbox/INBOX/p2/text=an&unseen
 					$baseURL . '/mailbox/INBOX/m' . $Message->Uid() . '/' . $search,
 					// icon
 					'icon-mail',
@@ -118,7 +118,7 @@ class Provider implements IProvider
 				);
 			}
 		} else {
-			\error_log('NextSnapMail not logged in to use unified search');
+			\error_log('SnapMail LT not logged in to use unified search');
 		}
 
 		if ($iLimit > \count($result)) {

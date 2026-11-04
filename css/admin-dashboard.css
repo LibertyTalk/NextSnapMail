@@ -1,22 +1,22 @@
-/* Nextcloud-style presentation for the integrated NextSnapMail administration. */
-.nextsnapmail-admin-settings {
+/* Nextcloud-style presentation for the integrated SnapMail LT administration. */
+.snapmail_lt-admin-settings {
 	max-width: 1320px;
 }
 
-.nextsnapmail-admin-settings [hidden] {
+.snapmail_lt-admin-settings [hidden] {
 	display: none !important;
 }
 
-.nextsnapmail-admin-navigation,
-.nextsnapmail-webmail-navigation {
+.snapmail_lt-admin-navigation,
+.snapmail_lt-webmail-navigation {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.5rem;
 	margin: 1.25rem 0;
 }
 
-.nextsnapmail-admin-navigation-item,
-.nextsnapmail-webmail-navigation button {
+.snapmail_lt-admin-navigation-item,
+.snapmail_lt-webmail-navigation button {
 	min-height: 38px;
 	margin: 0;
 	padding: 0.45rem 0.85rem;
@@ -27,46 +27,46 @@
 	font-weight: 600;
 }
 
-.nextsnapmail-admin-navigation-item:hover,
-.nextsnapmail-admin-navigation-item:focus,
-.nextsnapmail-webmail-navigation button:hover,
-.nextsnapmail-webmail-navigation button:focus {
+.snapmail_lt-admin-navigation-item:hover,
+.snapmail_lt-admin-navigation-item:focus,
+.snapmail_lt-webmail-navigation button:hover,
+.snapmail_lt-webmail-navigation button:focus {
 	background: var(--color-background-hover, #f2f2f2);
 }
 
-.nextsnapmail-admin-navigation-item.active,
-.nextsnapmail-webmail-navigation button.active {
+.snapmail_lt-admin-navigation-item.active,
+.snapmail_lt-webmail-navigation button.active {
 	border-color: var(--color-primary-element, #00679e);
 	background: var(--color-primary-element, #00679e);
 	color: var(--color-primary-element-text, #fff);
 }
 
-.nextsnapmail-admin-page,
-.nextsnapmail-admin-context,
-.nextsnapmail-integrated-admin,
-.nextsnapmail-save-area {
+.snapmail_lt-admin-page,
+.snapmail_lt-admin-context,
+.snapmail_lt-integrated-admin,
+.snapmail_lt-save-area {
 	width: min(100%, 1280px);
 }
 
-.nextsnapmail-admin-page > h3 {
+.snapmail_lt-admin-page > h3 {
 	margin-top: 1.5rem;
 }
 
-.nextsnapmail-webmail-navigation {
+.snapmail_lt-webmail-navigation {
 	margin-top: 0.75rem;
 }
 
-.nextsnapmail-webmail-navigation button {
+.snapmail_lt-webmail-navigation button {
 	min-height: 32px;
 	padding: 0.3rem 0.7rem;
 	font-size: 0.9rem;
 }
 
-.nextsnapmail-integrated-admin {
+.snapmail_lt-integrated-admin {
 	margin: 0.75rem 0 1.5rem;
 }
 
-#nextsnapmail-admin-frame {
+#snapmail_lt-admin-frame {
 	display: block;
 	width: 100%;
 	height: min(720px, calc(100vh - 230px));
@@ -76,7 +76,7 @@
 	background: var(--color-main-background, #fff);
 }
 
-.nextsnapmail-settings-card {
+.snapmail_lt-settings-card {
 	box-sizing: border-box;
 	margin: 1rem 0;
 	padding: 1.25rem;
@@ -85,80 +85,80 @@
 	background: var(--color-main-background, #fff);
 }
 
-.nextsnapmail-settings-card h3:first-child {
+.snapmail_lt-settings-card h3:first-child {
 	margin-top: 0;
 }
 
-.nextsnapmail-settings-card p {
+.snapmail_lt-settings-card p {
 	margin: 0.85rem 0;
 }
 
-.nextsnapmail-settings-card label[for="nextsnapmail-gmail-oauth-client-id"],
-.nextsnapmail-settings-card label[for="nextsnapmail-gmail-oauth-client-secret"],
-.nextsnapmail-settings-card label[for="nextsnapmail-gmail-oauth-domains"],
-.nextsnapmail-settings-card label[for="nextsnapmail-app_path"] {
+.snapmail_lt-settings-card label[for="snapmail_lt-gmail-oauth-client-id"],
+.snapmail_lt-settings-card label[for="snapmail_lt-gmail-oauth-client-secret"],
+.snapmail_lt-settings-card label[for="snapmail_lt-gmail-oauth-domains"],
+.snapmail_lt-settings-card label[for="snapmail_lt-app_path"] {
 	display: block;
 }
 
-#nextsnapmail-gmail-oauth-client-id,
-#nextsnapmail-gmail-oauth-client-secret,
-#nextsnapmail-gmail-oauth-domains,
-#nextsnapmail-app_path {
+#snapmail_lt-gmail-oauth-client-id,
+#snapmail_lt-gmail-oauth-client-secret,
+#snapmail_lt-gmail-oauth-domains,
+#snapmail_lt-app_path {
 	box-sizing: border-box;
 	width: min(100%, 44rem);
 	margin-top: 0.35rem;
 }
 
-.nextsnapmail-callback-url code {
+.snapmail_lt-callback-url code {
 	display: block;
 	max-width: 100%;
 	margin-top: 0.35rem;
 	overflow-wrap: anywhere;
 }
 
-.nextsnapmail-radio-row {
+.snapmail_lt-radio-row {
 	display: flex;
 	align-items: flex-start;
 	gap: 0.5rem;
 }
 
-.nextsnapmail-radio-row input {
+.snapmail_lt-radio-row input {
 	flex: 0 0 auto;
 }
 
-.nextsnapmail-danger-zone {
+.snapmail_lt-danger-zone {
 	margin-top: 1.5rem;
 	border-color: var(--color-error, #d32f2f);
 }
 
-#nextsnapmail-reset-button {
+#snapmail_lt-reset-button {
 	border-color: var(--color-error, #d32f2f);
 	background: var(--color-error, #d32f2f);
 	color: #fff;
 }
 
-.nextsnapmail-save-area {
+.snapmail_lt-save-area {
 	margin-top: 1.25rem;
 }
 
 @media (max-width: 700px) {
-	.nextsnapmail-admin-navigation {
+	.snapmail_lt-admin-navigation {
 		flex-direction: column;
 	}
 
-	.nextsnapmail-admin-navigation-item {
+	.snapmail_lt-admin-navigation-item {
 		width: 100%;
 		text-align: left;
 	}
 
-	#nextsnapmail-admin-frame {
+	#snapmail_lt-admin-frame {
 		height: 680px;
 	}
 }
 
 /* Styles below are also loaded inside the same-origin administration iframe. */
-.nextsnapmail-integrated-admin-document,
-.nextsnapmail-integrated-admin-body {
+.snapmail_lt-integrated-admin-document,
+.snapmail_lt-integrated-admin-body {
 	background: transparent !important;
 	color: var(--color-main-text, #222) !important;
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
@@ -279,7 +279,7 @@ dialog .btn-danger {
 
 #V-AdminPane .alert,
 dialog .alert,
-.nextsnapmail-admin-access-info {
+.snapmail_lt-admin-access-info {
 	box-sizing: border-box !important;
 	max-width: 760px !important;
 	padding: 0.9rem 1rem !important;
@@ -369,11 +369,11 @@ dialog > header .close {
 	text-decoration: none !important;
 }
 
-.nextsnapmail-integrated-admin-body .alert > .close {
+.snapmail_lt-integrated-admin-body .alert > .close {
 	font-size: 0 !important;
 }
 
-.nextsnapmail-integrated-admin-body .nextsnapmail-material-icon {
+.snapmail_lt-integrated-admin-body .snapmail_lt-material-icon {
 	display: inline-block;
 	flex: 0 0 auto !important;
 	width: 20px !important;
@@ -388,49 +388,49 @@ dialog > header .close {
 	vertical-align: middle !important;
 }
 
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-button,
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-action {
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-button,
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-action {
 	display: inline-flex;
 	align-items: center !important;
 	justify-content: center !important;
 	gap: 0.4rem !important;
 }
 
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-action {
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-action {
 	width: 32px !important;
 	height: 32px !important;
 	border-radius: 50% !important;
 	cursor: pointer !important;
 }
 
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-action:hover,
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-action:focus-visible {
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-action:hover,
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-action:focus-visible {
 	background: var(--color-background-hover, #e9e9e9) !important;
 }
 
-.nextsnapmail-integrated-admin-body .nextsnapmail-status-success { color: var(--color-success, #2d7d46) !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-status-warning { color: var(--color-warning, #b36b00) !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-status-error { color: var(--color-error, #c00) !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-status-success { color: var(--color-success, #2d7d46) !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-status-warning { color: var(--color-warning, #b36b00) !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-status-error { color: var(--color-error, #c00) !important; }
 
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-pencil { -webkit-mask-image: url('../img/material/pencil.svg') !important; mask-image: url('../img/material/pencil.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-plus { -webkit-mask-image: url('../img/material/plus.svg') !important; mask-image: url('../img/material/plus.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-close { -webkit-mask-image: url('../img/material/close.svg') !important; mask-image: url('../img/material/close.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-content-save { -webkit-mask-image: url('../img/material/content-save.svg') !important; mask-image: url('../img/material/content-save.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-information { -webkit-mask-image: url('../img/material/information.svg') !important; mask-image: url('../img/material/information.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-account-multiple { -webkit-mask-image: url('../img/material/account-multiple.svg') !important; mask-image: url('../img/material/account-multiple.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-checkbox-marked { -webkit-mask-image: url('../img/material/checkbox-marked.svg') !important; mask-image: url('../img/material/checkbox-marked.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-checkbox-blank { -webkit-mask-image: url('../img/material/checkbox-blank-outline.svg') !important; mask-image: url('../img/material/checkbox-blank-outline.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-account { -webkit-mask-image: url('../img/material/account.svg') !important; mask-image: url('../img/material/account.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-key { -webkit-mask-image: url('../img/material/key.svg') !important; mask-image: url('../img/material/key.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-timer { -webkit-mask-image: url('../img/material/timer.svg') !important; mask-image: url('../img/material/timer.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-power { -webkit-mask-image: url('../img/material/power.svg') !important; mask-image: url('../img/material/power.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-menu { -webkit-mask-image: url('../img/material/menu.svg') !important; mask-image: url('../img/material/menu.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-alert { -webkit-mask-image: url('../img/material/alert.svg') !important; mask-image: url('../img/material/alert.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-check-circle { -webkit-mask-image: url('../img/material/check-circle.svg') !important; mask-image: url('../img/material/check-circle.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-close-circle { -webkit-mask-image: url('../img/material/close-circle.svg') !important; mask-image: url('../img/material/close-circle.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-check { -webkit-mask-image: url('../img/material/check.svg') !important; mask-image: url('../img/material/check.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-cog { -webkit-mask-image: url('../img/material/cog.svg') !important; mask-image: url('../img/material/cog.svg') !important; }
-.nextsnapmail-integrated-admin-body .nextsnapmail-icon-delete { -webkit-mask-image: url('../img/material/delete.svg') !important; mask-image: url('../img/material/delete.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-pencil { -webkit-mask-image: url('../img/material/pencil.svg') !important; mask-image: url('../img/material/pencil.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-plus { -webkit-mask-image: url('../img/material/plus.svg') !important; mask-image: url('../img/material/plus.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-close { -webkit-mask-image: url('../img/material/close.svg') !important; mask-image: url('../img/material/close.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-content-save { -webkit-mask-image: url('../img/material/content-save.svg') !important; mask-image: url('../img/material/content-save.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-information { -webkit-mask-image: url('../img/material/information.svg') !important; mask-image: url('../img/material/information.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-account-multiple { -webkit-mask-image: url('../img/material/account-multiple.svg') !important; mask-image: url('../img/material/account-multiple.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-checkbox-marked { -webkit-mask-image: url('../img/material/checkbox-marked.svg') !important; mask-image: url('../img/material/checkbox-marked.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-checkbox-blank { -webkit-mask-image: url('../img/material/checkbox-blank-outline.svg') !important; mask-image: url('../img/material/checkbox-blank-outline.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-account { -webkit-mask-image: url('../img/material/account.svg') !important; mask-image: url('../img/material/account.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-key { -webkit-mask-image: url('../img/material/key.svg') !important; mask-image: url('../img/material/key.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-timer { -webkit-mask-image: url('../img/material/timer.svg') !important; mask-image: url('../img/material/timer.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-power { -webkit-mask-image: url('../img/material/power.svg') !important; mask-image: url('../img/material/power.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-menu { -webkit-mask-image: url('../img/material/menu.svg') !important; mask-image: url('../img/material/menu.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-alert { -webkit-mask-image: url('../img/material/alert.svg') !important; mask-image: url('../img/material/alert.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-check-circle { -webkit-mask-image: url('../img/material/check-circle.svg') !important; mask-image: url('../img/material/check-circle.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-close-circle { -webkit-mask-image: url('../img/material/close-circle.svg') !important; mask-image: url('../img/material/close-circle.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-check { -webkit-mask-image: url('../img/material/check.svg') !important; mask-image: url('../img/material/check.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-cog { -webkit-mask-image: url('../img/material/cog.svg') !important; mask-image: url('../img/material/cog.svg') !important; }
+.snapmail_lt-integrated-admin-body .snapmail_lt-icon-delete { -webkit-mask-image: url('../img/material/delete.svg') !important; mask-image: url('../img/material/delete.svg') !important; }
 
 dialog > header .close:hover {
 	background: var(--color-background-hover, #e5e5e5) !important;
@@ -549,7 +549,7 @@ dialog > header .close:hover {
 
 /* Package actions use locally bundled Material Design icons. Do not force the
  * display property: Knockout uses display:none for actions that do not apply. */
-#V-Settings-Packages .nextsnapmail-package-action {
+#V-Settings-Packages .snapmail_lt-package-action {
 	display: inline-flex;
 	align-items: center !important;
 	justify-content: center !important;
@@ -563,17 +563,17 @@ dialog > header .close:hover {
 	vertical-align: middle !important;
 }
 
-#V-Settings-Packages .nextsnapmail-package-action:hover,
-#V-Settings-Packages .nextsnapmail-package-action:focus-visible {
+#V-Settings-Packages .snapmail_lt-package-action:hover,
+#V-Settings-Packages .snapmail_lt-package-action:focus-visible {
 	background: var(--color-background-hover, #e9e9e9) !important;
 }
 
-#V-Settings-Packages .nextsnapmail-package-action-delete:hover,
-#V-Settings-Packages .nextsnapmail-package-action-delete:focus-visible {
+#V-Settings-Packages .snapmail_lt-package-action-delete:hover,
+#V-Settings-Packages .snapmail_lt-package-action-delete:focus-visible {
 	color: var(--color-error, #c00) !important;
 }
 
-#V-Settings-Packages .nextsnapmail-material-icon {
+#V-Settings-Packages .snapmail_lt-material-icon {
 	display: inline-block !important;
 	width: 20px !important;
 	height: 20px !important;
@@ -586,17 +586,17 @@ dialog > header .close:hover {
 	mask-size: contain !important;
 }
 
-#V-Settings-Packages .nextsnapmail-icon-cog {
+#V-Settings-Packages .snapmail_lt-icon-cog {
 	-webkit-mask-image: url('../img/material/cog.svg') !important;
 	mask-image: url('../img/material/cog.svg') !important;
 }
 
-#V-Settings-Packages .nextsnapmail-icon-download {
+#V-Settings-Packages .snapmail_lt-icon-download {
 	-webkit-mask-image: url('../img/material/download.svg') !important;
 	mask-image: url('../img/material/download.svg') !important;
 }
 
-#V-Settings-Packages .nextsnapmail-icon-delete {
+#V-Settings-Packages .snapmail_lt-icon-delete {
 	-webkit-mask-image: url('../img/material/delete.svg') !important;
 	mask-image: url('../img/material/delete.svg') !important;
 }

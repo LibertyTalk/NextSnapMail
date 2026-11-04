@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NextSnapMail;
+namespace OCA\SnapMailLT;
 
 use OCP\AppFramework\Http\ContentSecurityPolicy as NextcloudContentSecurityPolicy;
 

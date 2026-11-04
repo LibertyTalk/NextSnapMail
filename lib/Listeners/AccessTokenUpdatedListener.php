@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\NextSnapMail\Listeners;
+namespace OCA\SnapMailLT\Listeners;
 
 use OCA\OIDCLogin\Events\AccessTokenUpdatedEvent;
 use OCP\App\IAppManager;
@@ -16,7 +16,7 @@ class AccessTokenUpdatedListener implements IEventListener {
 	private ISession $session;
 	private IAppManager $appManager;
 
-	private const SNAPPYMAIL_APP_ID = 'nextsnapmail';
+	private const SNAPPYMAIL_APP_ID = 'snapmail_lt';
 	private const OIDC_LOGIN_APP_ID = 'oidc_login';
 
 
@@ -40,6 +40,6 @@ class AccessTokenUpdatedListener implements IEventListener {
 		}
 
 		$username = $this->userSession->getUser()->getUID();
-		$this->session->set('nextsnapmail-nc-uid', $username);
+		$this->session->set('snapmail_lt-nc-uid', $username);
 	}
 }

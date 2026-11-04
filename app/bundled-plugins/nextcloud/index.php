@@ -13,9 +13,9 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 	const
 		GMAIL_OAUTH_TOKEN_PREFIX = 'login-gmail-oauth:',
 		GMAIL_OAUTH_LEGACY_TOKEN_PREFIX = 'gmail2026:',
-		GMAIL_OAUTH_START_PART = 'NextSnapMailGmailOauthStart',
-		GMAIL_OAUTH_CALLBACK_PART = 'NextSnapMailGmailOauth',
-		GMAIL_OAUTH_STATE_KEY = 'nextsnapmail_gmail_oauth_state',
+		GMAIL_OAUTH_START_PART = 'SnapMailLTGmailOauthStart',
+		GMAIL_OAUTH_CALLBACK_PART = 'SnapMailLTGmailOauth',
+		GMAIL_OAUTH_STATE_KEY = 'snapmail_lt_gmail_oauth_state',
 		GMAIL_OAUTH_LOGIN_URI = 'https://accounts.google.com/o/oauth2/v2/auth',
 		GMAIL_OAUTH_TOKEN_URI = 'https://oauth2.googleapis.com/token',
 		GMAIL_OAUTH_USERINFO_URI = 'https://openidconnect.googleapis.com/v1/userinfo';
@@ -47,7 +47,7 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 
 			$this->addTemplate('templates/PopupsNextcloudFiles.html');
 			$this->addTemplate('templates/PopupsNextcloudCalendars.html');
-			$this->addTemplate('templates/NextSnapMailVacationUserSettings.html');
+			$this->addTemplate('templates/SnapMailLTVacationUserSettings.html');
 
 //			$this->addHook('login.credentials.step-2', 'loginCredentials2');
 //			$this->addHook('login.credentials', 'loginCredentials');
@@ -59,7 +59,7 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 			$this->addHook('filter.http-paths', 'httpPaths');
 		} else {
 			\SnappyMail\Log::debug('Nextcloud', 'NOT integrated');
-			// \OC::$server->getConfig()->getAppValue('nextsnapmail', 'nextsnapmail-no-embed');
+			// \OC::$server->getConfig()->getAppValue('snapmail_lt', 'snapmail_lt-no-embed');
 			$this->addHook('main.content-security-policy', 'ContentSecurityPolicy');
 		}
 	}
@@ -136,11 +136,11 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 		// it is enabled in config, the user is currently logged in with OIDC,
 		// the current snappymail account is the OIDC account and no account defined explicitly
 		if ($oAccount instanceof \RainLoop\Model\MainAccount
-		 && \OCA\NextSnapMail\Util\SnappyMailHelper::isOIDCLogin()
+		 && \OCA\SnapMailLT\Util\SnappyMailHelper::isOIDCLogin()
 //		 && $oClient->supportsAuthType('OAUTHBEARER') // v2.28
 		 && \str_starts_with($oSettings->passphrase, 'oidc_login|')
 		) {
-//			$oSettings->passphrase = \OC::$server->getSession()->get('nextsnapmail-passphrase');
+//			$oSettings->passphrase = \OC::$server->getSession()->get('snapmail_lt-passphrase');
 			$oSettings->passphrase = \OC::$server->get(\OCP\ISession::class)->get('oidc_access_token');
 			\array_unshift($oSettings->SASLMechanisms, 'OAUTHBEARER');
 		}
@@ -373,9 +373,9 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 				$config = \OC::$server->get(\OCP\IConfig::class);
 				$config->setUserValue(
 					$user->getUID(),
-					'nextsnapmail',
+					'snapmail_lt',
 					'passphrase',
-					\OCA\NextSnapMail\Util\SnappyMailHelper::encodePassword($storedAuth, \md5($oAccount->Email()))
+					\OCA\SnapMailLT\Util\SnappyMailHelper::encodePassword($storedAuth, \md5($oAccount->Email()))
 				);
 			}
 		}
@@ -390,14 +390,14 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 
 		$config = \OC::$server->get(\OCP\IConfig::class);
 		$storedAuth = $this->encodeGmailOauthStoredToken($auth);
-		$config->setUserValue($user->getUID(), 'nextsnapmail', 'nextsnapmail-email', $email);
+		$config->setUserValue($user->getUID(), 'snapmail_lt', 'snapmail_lt-email', $email);
 		$config->setUserValue(
 			$user->getUID(),
-			'nextsnapmail',
+			'snapmail_lt',
 			'passphrase',
-			\OCA\NextSnapMail\Util\SnappyMailHelper::encodePassword($storedAuth, \md5($email))
+			\OCA\SnapMailLT\Util\SnappyMailHelper::encodePassword($storedAuth, \md5($email))
 		);
-		$config->deleteUserValue($user->getUID(), 'nextsnapmail', 'nextsnapmail-password');
+		$config->deleteUserValue($user->getUID(), 'snapmail_lt', 'snapmail_lt-password');
 	}
 
 	private function createOrUpdateGmailAdditionalAccount(string $email, #[\SensitiveParameter] array $auth) : void
@@ -431,14 +431,14 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 		$accounts = $oActions->GetAccounts($oMainAccount);
 		$accounts[$oAdditionalAccount->Email()] = $oAdditionalAccount->asTokenArray($oMainAccount);
 		$accounts[$oAdditionalAccount->Email()]['name'] = 'Gmail';
-		$accounts[$oAdditionalAccount->Email()]['nextsnapmail-gmail-oauth'] = true;
+		$accounts[$oAdditionalAccount->Email()]['snapmail_lt-gmail-oauth'] = true;
 		$oActions->SetAccounts($oMainAccount, $accounts);
 	}
 
 	private function ensureGmailDomain(string $email) : void
 	{
 		$config = \OC::$server->get(\OCP\IConfig::class);
-		if (!$config->getAppValue('nextsnapmail', 'gmail-oauth-auto-configure', '1')) {
+		if (!$config->getAppValue('snapmail_lt', 'gmail-oauth-auto-configure', '1')) {
 			return;
 		}
 
@@ -479,7 +479,7 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 			return false;
 		}
 
-		$raw = \strtolower(\OC::$server->get(\OCP\IConfig::class)->getAppValue('nextsnapmail', 'gmail-oauth-domains', "gmail.com\ngooglemail.com"));
+		$raw = \strtolower(\OC::$server->get(\OCP\IConfig::class)->getAppValue('snapmail_lt', 'gmail-oauth-domains', "gmail.com\ngooglemail.com"));
 		$domains = \preg_split('/[\s,;]+/', $raw, -1, PREG_SPLIT_NO_EMPTY) ?: [];
 		$domains = \array_values(\array_unique(\array_map(
 			static fn (string $domain) : string => \ltrim(\trim($domain), '@'),
@@ -492,7 +492,7 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 	private function gmailOauthClient() : ?\OAuth2\Client
 	{
 		$config = \OC::$server->get(\OCP\IConfig::class);
-		$clientId = \trim($config->getAppValue('nextsnapmail', 'gmail-oauth-client-id', ''));
+		$clientId = \trim($config->getAppValue('snapmail_lt', 'gmail-oauth-client-id', ''));
 		$clientSecret = $this->gmailOauthClientSecret();
 		if (!$clientId || !$clientSecret) {
 			return null;
@@ -515,38 +515,38 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 
 	private function gmailOauthCallbackUrl() : string
 	{
-		return \OC::$server->get(\OCP\IURLGenerator::class)->linkToRouteAbsolute('nextsnapmail.page.index')
+		return \OC::$server->get(\OCP\IURLGenerator::class)->linkToRouteAbsolute('snapmail_lt.page.index')
 			. '?' . static::GMAIL_OAUTH_CALLBACK_PART;
 	}
 
 	private function appUrl() : string
 	{
-		return \OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('nextsnapmail.page.index');
+		return \OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('snapmail_lt.page.index');
 	}
 
 	private function redirectToPersonalSettingsWithGmailStatus(string $message = '', string $error = '') : void
 	{
 		$session = \OC::$server->get(\OCP\ISession::class);
 		if ('' !== $message) {
-			$session->set('nextsnapmail-gmail-oauth-message', $message);
+			$session->set('snapmail_lt-gmail-oauth-message', $message);
 		}
 		if ('' !== $error) {
-			$session->set('nextsnapmail-gmail-oauth-error', 'Gmail OAuth2 login failed: ' . $error);
+			$session->set('snapmail_lt-gmail-oauth-error', 'Gmail OAuth2 login failed: ' . $error);
 		}
 
 		\RainLoop\Api::Actions()->Location(
-			\OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('settings.PersonalSettings.index', ['section' => 'nextsnapmail'])
+			\OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('settings.PersonalSettings.index', ['section' => 'snapmail_lt'])
 		);
 	}
 
 	private function gmailOauthClientSecret() : string
 	{
-		$encrypted = \OC::$server->get(\OCP\IConfig::class)->getAppValue('nextsnapmail', 'gmail-oauth-client-secret', '');
+		$encrypted = \OC::$server->get(\OCP\IConfig::class)->getAppValue('snapmail_lt', 'gmail-oauth-client-secret', '');
 		if ('' === $encrypted) {
 			return '';
 		}
 
-		$secret = \OCA\NextSnapMail\Util\SnappyMailHelper::decodePassword($encrypted, 'nextsnapmail-gmail-oauth-client-secret');
+		$secret = \OCA\SnapMailLT\Util\SnappyMailHelper::decodePassword($encrypted, 'snapmail_lt-gmail-oauth-client-secret');
 		return $secret ? (string) $secret : '';
 	}
 
@@ -776,10 +776,10 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 //				'WebDAV_files' => $sWebDAV . '/files/' . $sUID
 			];
 			$config = \OC::$server->get(\OCP\IConfig::class);
-			$gmailClientSecret = $config->getAppValue('nextsnapmail', 'gmail-oauth-client-secret', '');
-			if ($config->getAppValue('nextsnapmail', 'gmail-oauth-client-id', '') && $gmailClientSecret) {
-				$aResult['NextSnapMailGmailOAuth'] = [
-					'StartUrl' => \OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('nextsnapmail.page.index')
+			$gmailClientSecret = $config->getAppValue('snapmail_lt', 'gmail-oauth-client-secret', '');
+			if ($config->getAppValue('snapmail_lt', 'gmail-oauth-client-id', '') && $gmailClientSecret) {
+				$aResult['SnapMailLTGmailOAuth'] = [
+					'StartUrl' => \OC::$server->get(\OCP\IURLGenerator::class)->linkToRoute('snapmail_lt.page.index')
 						. '?' . static::GMAIL_OAUTH_START_PART,
 					'AddAccountLabel' => 'Add Gmail / Google account'
 				];
@@ -788,16 +788,16 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 				$sEmail = '';
 				// Only store the user's password in the current session if they have
 				// enabled auto-login using Nextcloud username or email address.
-				if ($config->getAppValue('nextsnapmail', 'nextsnapmail-autologin', false)) {
+				if ($config->getAppValue('snapmail_lt', 'snapmail_lt-autologin', false)) {
 					$sEmail = $sUID;
-				} else if ($config->getAppValue('nextsnapmail', 'nextsnapmail-autologin-with-email', false)) {
+				} else if ($config->getAppValue('snapmail_lt', 'snapmail_lt-autologin-with-email', false)) {
 					$sEmail = $config->getUserValue($sUID, 'settings', 'email', '');
 				} else {
-					\SnappyMail\Log::debug('Nextcloud', 'nextsnapmail-autologin is off');
+					\SnappyMail\Log::debug('Nextcloud', 'snapmail_lt-autologin is off');
 				}
 				// If the user has set credentials for SnappyMail in their personal
 				// settings, override everything before and use those instead.
-				$sCustomEmail = $config->getUserValue($sUID, 'nextsnapmail', 'nextsnapmail-email', '');
+				$sCustomEmail = $config->getUserValue($sUID, 'snapmail_lt', 'snapmail_lt-email', '');
 				if ($sCustomEmail) {
 					$sEmail = $sCustomEmail;
 				}
@@ -806,7 +806,7 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 //						?: $ocUser->getPrimaryEMailAddress();
 				}
 /*
-				if ($config->getAppValue('nextsnapmail', 'nextsnapmail-autologin-oidc', false)) {
+				if ($config->getAppValue('snapmail_lt', 'snapmail_lt-autologin-oidc', false)) {
 					if (\OC::$server->getSession()->get('is_oidc')) {
 						$sEmail = "{$sUID}@nextcloud";
 						$aResult['DevPassword'] = \OC::$server->getSession()->get('oidc_access_token');
@@ -828,7 +828,7 @@ class NextcloudPlugin extends \RainLoop\Plugins\AbstractPlugin
 					$aResult['ContactsSync']['User'] = $sUID;
 					$bSave = true;
 				}
-				$pass = \OC::$server->get(\OCP\ISession::class)->get('nextsnapmail-passphrase');
+				$pass = \OC::$server->get(\OCP\ISession::class)->get('snapmail_lt-passphrase');
 				if ($pass/* && empty($aResult['ContactsSync']['Password'])*/) {
 					$pass = \SnappyMail\Crypt::DecryptUrlSafe($pass, $sUID);
 					if ($pass) {

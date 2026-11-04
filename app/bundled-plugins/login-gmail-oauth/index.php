@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Gmail OAuth2 login for NextSnapMail.
+ * Gmail OAuth2 login for SnapMail LT.
  *
  * This plugin intentionally does not replace the legacy SnappyMail
  * login-gmail plugin. It uses a separate plugin id ("login-gmail-oauth") so it can be
@@ -22,8 +22,8 @@ class LoginGmailOauthPlugin extends \RainLoop\Plugins\AbstractPlugin
 		NAME     = 'Login Gmail OAuth2',
 		VERSION  = '0.5',
 		RELEASE  = '2026-08-05',
-		AUTHOR   = 'NextSnapMail',
-		URL      = 'https://github.com/oe79/NextSnapMail',
+		AUTHOR   = 'SnapMail LT',
+		URL      = 'https://github.com/LibertyTalk/snapmail_lt',
 		REQUIRED = '2.36.1',
 		CATEGORY = 'Login',
 		DESCRIPTION = 'Gmail and Google Workspace IMAP/SMTP login using current Google OAuth2 endpoints';
@@ -31,8 +31,8 @@ class LoginGmailOauthPlugin extends \RainLoop\Plugins\AbstractPlugin
 	const
 		AUTH_START_PART = 'LoginGmailOauthStart',
 		AUTH_CALLBACK_PART = 'LoginGmailOauth',
-		SESSION_STATE_KEY = 'nextsnapmail_login_gmail_oauth_state',
-		STATE_COOKIE = 'nextsnapmail_login_gmail_oauth_state',
+		SESSION_STATE_KEY = 'snapmail_lt_login_gmail_oauth_state',
+		STATE_COOKIE = 'snapmail_lt_login_gmail_oauth_state',
 		TOKEN_PREFIX = 'login-gmail-oauth:',
 		LEGACY_TOKEN_PREFIX = 'gmail2026:',
 		LOGIN_URI = 'https://accounts.google.com/o/oauth2/v2/auth',

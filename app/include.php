@@ -29,14 +29,14 @@
  */
 if (class_exists('OC')) {
 	$config = \OC::$server->get(\OCP\IConfig::class);
-	define('APP_DATA_FOLDER_PATH', \rtrim(\trim($config->getSystemValue('datadirectory', '')), '\\/').'/appdata_nextsnapmail/');
+	define('APP_DATA_FOLDER_PATH', \rtrim(\trim($config->getSystemValue('datadirectory', '')), '\\/').'/appdata_snapmail_lt/');
 } else {
 	http_response_code(400);
 	header($_SERVER['SERVER_PROTOCOL'].' 400 Bad Request', true, 400);
-	error_log("NextSnapMail outside Nextcloud {$_SERVER['REQUEST_URI']}");
+	error_log("SnapMail LT outside Nextcloud {$_SERVER['REQUEST_URI']}");
 	exit('Not inside Nextcloud');
-//	define('APP_DATA_FOLDER_PATH', dirname(__DIR__) . '/nextsnapmail-data/');
-//	define('APP_DATA_FOLDER_PATH', '/var/external-nextsnapmail-data-folder/');
+//	define('APP_DATA_FOLDER_PATH', dirname(__DIR__) . '/snapmail_lt-data/');
+//	define('APP_DATA_FOLDER_PATH', '/var/external-snapmail_lt-data-folder/');
 }
 
 /**

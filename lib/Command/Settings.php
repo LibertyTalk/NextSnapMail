@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\NextSnapMail\Command;
+namespace OCA\SnapMailLT\Command;
 
-use OCA\NextSnapMail\Util\SnappyMailHelper;
+use OCA\SnapMailLT\Util\SnappyMailHelper;
 use OC\Core\Command\Base;
 use OCP\IConfig;
 use OCP\IUserManager;
@@ -23,7 +23,7 @@ class Settings extends Base
 
 	protected function configure() {
 		$this
-			->setName('nextsnapmail:settings')
+			->setName('snapmail_lt:settings')
 			->setDescription('modifies configuration')
 			->addArgument(
 				'uid',
@@ -51,7 +51,7 @@ class Settings extends Base
 		}
 
 		$sEmail = $input->getArgument('user');
-		$this->config->setUserValue($uid, 'nextsnapmail', 'nextsnapmail-email', $sEmail);
+		$this->config->setUserValue($uid, 'snapmail_lt', 'snapmail_lt-email', $sEmail);
 
 		$sPass = $input->getArgument('pass');
 		if (empty($sPass)) {
@@ -64,7 +64,7 @@ class Settings extends Base
 			}
 		}
 		$sPass = ($sEmail && $sPass) ? SnappyMailHelper::encodePassword($sPass, \md5($sEmail)) : '';
-		$this->config->setUserValue($uid, 'nextsnapmail', 'passphrase', $sPass);
+		$this->config->setUserValue($uid, 'snapmail_lt', 'passphrase', $sPass);
 		return 0;
 	}
 }

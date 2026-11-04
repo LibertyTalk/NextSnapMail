@@ -3,7 +3,7 @@
 ### Added
 
 - Begin the native Nextcloud administration integration: the complete existing
-  domain and webmail configuration is available directly from the NextSnapMail
+  domain and webmail configuration is available directly from the SnapMail LT
   administration section without a second administrator login.
 - Add a dedicated Nextcloud-admin-only endpoint for every embedded
   administration request.
@@ -13,11 +13,11 @@
 ### Changed
 
 - Hide the redundant embedded SnappyMail administration sidebar and logout
-  controls in favor of the NextSnapMail navigation.
+  controls in favor of the SnapMail LT navigation.
 - Move Google OAuth settings next to the mail-domain configuration and place
   import and reset operations on their own administration page.
 - Present all former webmail administration subsections in the main
-  NextSnapMail navigation and use SnappyMail's actual `settings/*` routes so
+  SnapMail LT navigation and use SnappyMail's actual `settings/*` routes so
   existing domains and domain creation remain available.
 - Restyle embedded administration forms, tables, dialogs, controls and domain
   actions to match the Nextcloud interface more closely.
@@ -28,10 +28,10 @@
 - Replace legacy extension action glyphs with Material Design icons and hide
   activation controls for extensions that are not installed.
 - Reorder the integrated administration navigation and consistently use
-  Nextcloud-style Material icons and NextSnapMail branding throughout it.
+  Nextcloud-style Material icons and SnapMail LT branding throughout it.
 - Show mail-domain management before the Google OAuth configuration and remove
   the obsolete iframe-mode choice from the visible Nextcloud administration.
-- Keep `rainloop.user` and `nextsnapmail.user` independently selectable and
+- Keep `rainloop.user` and `snapmail_lt.user` independently selectable and
   editable during normal filter changes. Merge the legacy filters and remove
   `rainloop.user` only after the user explicitly starts a successful migration.
 
@@ -85,18 +85,18 @@
 
 - Present the unread-folder control as a clearly labeled filter button in the
   folder sidebar so it is no longer mistaken for a parent folder.
-- Use `nextsnapmail.user` for newly managed Sieve filters while retaining and
+- Use `snapmail_lt.user` for newly managed Sieve filters while retaining and
   safely migrating existing `rainloop.user` filters without deleting them.
 
 ## 0.1.12 – 2026-09-12
 
 ### Changed
 
-- Use NextSnapMail-specific browser cookie names to avoid session collisions
+- Use SnapMail LT-specific browser cookie names to avoid session collisions
   with SnappyMail or related forks running on the same Nextcloud domain.
 - Treat a valid empty plugin repository as reachable instead of showing a
   repository access warning.
-- Clear the new NextSnapMail cookie names during reset.
+- Clear the new SnapMail LT cookie names during reset.
 - Avoid PHP 8.5 `curl_close()` deprecation warnings in bundled legacy plugin
   clients.
 - Add administrator-controlled messages-per-page defaults, maximum values and
@@ -113,7 +113,7 @@
 - Mark stored password parameters as sensitive so they are masked in exception
   traces on supported PHP versions.
 - Guard Nextcloud login, logout and impersonation event handlers so a
-  NextSnapMail session cleanup/preparation problem cannot block the surrounding
+  SnapMail LT session cleanup/preparation problem cannot block the surrounding
   Nextcloud action.
 
 ## 0.1.11 – 2026-09-12
@@ -125,12 +125,12 @@
   and as additional accounts from the webmail UI.
 - Add Nextcloud admin settings for Gmail / Google OAuth2 client configuration,
   including the authorized redirect URI for the Google Cloud Console.
-- Add support for a separate NextSnapMail plugin repository and administrator
+- Add support for a separate SnapMail LT plugin repository and administrator
   upload of custom plugins.
 
 ### Changed
 
-- Include Gmail / Google OAuth2 configuration in the guarded NextSnapMail reset
+- Include Gmail / Google OAuth2 configuration in the guarded SnapMail LT reset
   cleanup so a reset removes the stored client ID, client secret and related
   OAuth settings.
 - Document the integrated Gmail / Google OAuth2 support in the README and
@@ -140,19 +140,19 @@
 
 ### Added
 
-- Add an administrator-facing Reset NextSnapMail action that removes
-  NextSnapMail account preferences, clears the NextSnapMail data folder,
-  recreates a clean data structure, and clears the active NextSnapMail browser
+- Add an administrator-facing Reset SnapMail LT action that removes
+  SnapMail LT account preferences, clears the SnapMail LT data folder,
+  recreates a clean data structure, and clears the active SnapMail LT browser
   session state.
-- Document the SnappyMail import and NextSnapMail reset features in the
+- Document the SnappyMail import and SnapMail LT reset features in the
   Nextcloud app metadata.
 
 ### Changed
 
-- Harden the SnappyMail import so existing valid NextSnapMail crypt keys,
+- Harden the SnappyMail import so existing valid SnapMail LT crypt keys,
   additional accounts, and PGP private key backups can be preserved safely.
 - Re-encrypt imported additional accounts and PGP private key backups for the
-  target NextSnapMail account instead of copying encrypted data blindly.
+  target SnapMail LT account instead of copying encrypted data blindly.
 
 ### Fixed
 
@@ -170,9 +170,9 @@
 
 - Add an administrator-facing importer for existing SnappyMail installations.
   The importer can copy account preferences, encrypted login data, additional
-  account definitions, and app data from `snappymail` to `nextsnapmail` while
+  account definitions, and app data from `snappymail` to `snapmail_lt` while
   leaving the old SnappyMail installation untouched by default.
-- Add guarded cleanup actions for imported NextSnapMail account data and old
+- Add guarded cleanup actions for imported SnapMail LT account data and old
   SnappyMail data, including confirmation and server-side validation.
 
 ### Fixed
@@ -219,9 +219,9 @@
 
 ### Changed
 
-- Add an explicit App Store disclaimer that NextSnapMail is provided as-is and
+- Add an explicit App Store disclaimer that SnapMail LT is provided as-is and
   should be used at the user's own risk.
-- Show `NextSnapMail` instead of `SnappyMail` in the embedded admin panel
+- Show `SnapMail LT` instead of `SnappyMail` in the embedded admin panel
   header.
 
 
@@ -229,29 +229,29 @@
 
 ### Fixed
 
-- Ensure the Nextcloud App Store release package uses the cleaned NextSnapMail
+- Ensure the Nextcloud App Store release package uses the cleaned SnapMail LT
   app metadata from the repository instead of stale local test metadata.
 
 
 ## 0.1.0 – 2026-06-30
 
-Initial NextSnapMail release as an independent SnappyMail fork focused on
+Initial SnapMail LT release as an independent SnappyMail fork focused on
 Nextcloud integration.
 
 ### Added
 
-- Introduce `nextsnapmail` as a standalone Nextcloud app id and namespace.
-- Add dedicated "NextSnapMail" sections to the Nextcloud administration and
+- Introduce `snapmail_lt` as a standalone Nextcloud app id and namespace.
+- Add dedicated "SnapMail LT" sections to the Nextcloud administration and
   personal settings.
 - Bundle available SnappyMail extensions with the app release so installations
   no longer depend on the former external SnappyMail package repository.
 
 ### Changed
 
-- Rename the Nextcloud integration from SnappyMail to NextSnapMail while keeping
+- Rename the Nextcloud integration from SnappyMail to SnapMail LT while keeping
   attribution to the upstream SnappyMail and RainLoop projects.
 - Update app metadata, documentation links and release description for the
-  NextSnapMail fork.
+  SnapMail LT fork.
 
 ### Fixed
 

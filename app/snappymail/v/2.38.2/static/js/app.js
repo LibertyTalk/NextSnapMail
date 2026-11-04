@@ -15848,7 +15848,7 @@ body > * {
 			});
 
 			const sieveScriptUrl = SettingsGet('StaticLibsJs').replace('/libs.', '/sieve.'),
-				sieveScriptVersion = 'nextsnapmail-0.1.14-independent-scripts';
+				sieveScriptVersion = 'snapmail_lt-0.1.14-independent-scripts';
 			rl.loadScript(sieveScriptUrl + (sieveScriptUrl.includes('?') ? '&' : '?') + 'v=' + sieveScriptVersion).then(() => {
 				const Sieve = window.Sieve;
 				Sieve.folderList = FolderUserStore.folderList;
@@ -15875,11 +15875,11 @@ body > * {
 				const language = (LanguageStore.language() || doc.documentElement.lang || '').toLowerCase();
 				return language.startsWith('de')
 					? {
-						description: 'Ein altes RainLoop-Filterskript wurde erkannt. Die Filter werden mit nextsnapmail.user zusammengeführt und rainloop.user wird anschließend entfernt.',
+						description: 'Ein altes RainLoop-Filterskript wurde erkannt. Die Filter werden mit snapmail_lt.user zusammengeführt und rainloop.user wird anschließend entfernt.',
 						button: 'RainLoop-Filter jetzt übernehmen'
 					}
 					: {
-						description: 'A legacy RainLoop filter script was detected. Its filters will be merged into nextsnapmail.user and rainloop.user will then be removed.',
+						description: 'A legacy RainLoop filter script was detected. Its filters will be merged into snapmail_lt.user and rainloop.user will then be removed.',
 						button: 'Migrate RainLoop filters now'
 					};
 			};

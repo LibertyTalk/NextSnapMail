@@ -1,5 +1,5 @@
 (rl => {
-	const config = rl.settings.get('NextSnapMailGmailOAuth') || {};
+	const config = rl.settings.get('SnapMailLTGmailOAuth') || {};
 	if (!config.StartUrl) {
 		return;
 	}
@@ -9,7 +9,7 @@
 			document.location = config.StartUrl + (config.StartUrl.includes('?') ? '&' : '?') + 'mode=additional';
 		},
 		injectAdditionalAccountButton = root => {
-			if (!root || root.querySelector('.nextsnapmail-gmail-oauth-additional-account')) {
+			if (!root || root.querySelector('.snapmail_lt-gmail-oauth-additional-account')) {
 				return;
 			}
 
@@ -17,7 +17,7 @@
 				target = accountsList?.parentNode || root,
 				controls = document.createElement('div'),
 				button = document.createElement('button');
-			controls.className = 'nextsnapmail-gmail-oauth-additional-account controls';
+			controls.className = 'snapmail_lt-gmail-oauth-additional-account controls';
 			controls.style.margin = '10px 0';
 			button.type = 'button';
 			button.textContent = addAccountLabel;
@@ -26,7 +26,7 @@
 			accountsList ? target.insertBefore(controls, accountsList) : target.append(controls);
 		},
 		injectAccountPopupButton = root => {
-			if (!root || root.querySelector('.nextsnapmail-gmail-oauth-popup-account')) {
+			if (!root || root.querySelector('.snapmail_lt-gmail-oauth-popup-account')) {
 				return;
 			}
 
@@ -40,7 +40,7 @@
 				info = document.createElement('div');
 
 			button.type = 'button';
-			button.className = 'btn nextsnapmail-gmail-oauth-popup-account';
+			button.className = 'btn snapmail_lt-gmail-oauth-popup-account';
 			button.textContent = addAccountLabel;
 			button.style.marginRight = '8px';
 			button.onclick = event => {
@@ -49,7 +49,7 @@
 				startAdditionalLogin();
 			};
 
-			info.className = 'nextsnapmail-gmail-oauth-popup-account-info';
+			info.className = 'snapmail_lt-gmail-oauth-popup-account-info';
 			info.style.margin = '8px 0 0 160px';
 			info.style.opacity = '0.75';
 			info.textContent = 'Gmail / Google OAuth2';
@@ -68,14 +68,14 @@
 				];
 
 			menus.forEach(menu => {
-				if (menu.querySelector('.nextsnapmail-gmail-oauth-account-menu-add')) {
+				if (menu.querySelector('.snapmail_lt-gmail-oauth-account-menu-add')) {
 					return;
 				}
 
 				const li = document.createElement('li'),
 					link = document.createElement('a'),
 					addAccountLink = menu.querySelector('a[data-i18n="TOP_TOOLBAR/BUTTON_ADD_ACCOUNT"]');
-				li.className = 'dividerbar nextsnapmail-gmail-oauth-account-menu-add';
+				li.className = 'dividerbar snapmail_lt-gmail-oauth-account-menu-add';
 				li.setAttribute('role', 'presentation');
 				link.href = '#';
 				link.tabIndex = -1;

@@ -559,8 +559,8 @@ class Actions
 
 		$aResult = array(
 			'Auth' => false,
-			'title' => $oConfig->Get('webmail', 'title', 'NextSnapMail Webmail'),
-			'loadingDescription' => $oConfig->Get('webmail', 'loading_description', 'NextSnapMail'),
+			'title' => $oConfig->Get('webmail', 'title', 'SnapMail LT Webmail'),
+			'loadingDescription' => $oConfig->Get('webmail', 'loading_description', 'SnapMail LT'),
 			'Plugins' => array(),
 			'System' => array(
 				'version' => APP_VERSION,

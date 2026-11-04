@@ -4,10 +4,10 @@
 	}
 
 	const
-		SCRIPT_NAME = 'nextsnapmail.user',
+		SCRIPT_NAME = 'snapmail_lt.user',
 		LEGACY_SCRIPT_NAME = 'rainloop.user',
-		BLOCK_REGEX = /^# BEGIN:NEXTSNAPMAIL:VACATION\s*$[\s\S]*?^# END:NEXTSNAPMAIL:VACATION\s*$/gm,
-		DATA_REGEX = /^# NEXTSNAPMAIL:VACATION-DATA\s+([A-Za-z0-9+/=]+)\s*$/m,
+		BLOCK_REGEX = /^# BEGIN:SNAPMAIL_LT:VACATION\s*$[\s\S]*?^# END:SNAPMAIL_LT:VACATION\s*$/gm,
+		DATA_REGEX = /^# SNAPMAIL_LT:VACATION-DATA\s+([A-Za-z0-9+/=]+)\s*$/m,
 		REQUIRED_CAPABILITIES = ['vacation', 'date', 'relational'];
 
 	const dateValue = date => {
@@ -33,9 +33,9 @@
 	const hasUnmanagedVacation = body => /^\s*vacation(?:\s|:)/mi.test(executableBody(body));
 
 	const modernizeHeader = body => String(body || '')
-		.replace('# This is SnappyMail sieve script.', '# This is a NextSnapMail Sieve script.')
+		.replace('# This is SnappyMail sieve script.', '# This is a SnapMail LT Sieve script.')
 		.replace("# Please don't change anything here.", '# Please do not edit managed sections manually.')
-		.replace('# RAINLOOP:SIEVE', '# NEXTSNAPMAIL:SIEVE');
+		.replace('# RAINLOOP:SIEVE', '# SNAPMAIL_LT:SIEVE');
 
 	const addRequirements = (body, requirements) => {
 		let result = String(body || ''),
@@ -55,7 +55,7 @@
 			: declaration + '\r\n\r\n' + result;
 	};
 
-	class NextSnapMailVacationUserSettings
+	class SnapMailLTVacationUserSettings
 	{
 		constructor()
 		{
@@ -118,9 +118,9 @@
 					this.usingLegacyScript(true);
 				} else {
 					this.sourceScriptName = SCRIPT_NAME;
-					this.sourceBody = '# This is a NextSnapMail Sieve script.\r\n'
+					this.sourceBody = '# This is a SnapMail LT Sieve script.\r\n'
 						+ '# Please do not edit managed sections manually.\r\n'
-						+ '# NEXTSNAPMAIL:SIEVE\r\n';
+						+ '# SNAPMAIL_LT:SIEVE\r\n';
 				}
 
 				this.conflictingVacation(hasUnmanagedVacation(this.sourceBody));
@@ -266,7 +266,7 @@
 			}
 			catch (error)
 			{
-				this.error('The existing NextSnapMail vacation settings could not be read.');
+				this.error('The existing SnapMail LT vacation settings could not be read.');
 				return null;
 			}
 		}
@@ -313,8 +313,8 @@
 				]
 			};
 			const result = [
-				'# BEGIN:NEXTSNAPMAIL:VACATION',
-				'# NEXTSNAPMAIL:VACATION-DATA ' + encodeData(data)
+				'# BEGIN:SNAPMAIL_LT:VACATION',
+				'# SNAPMAIL_LT:VACATION-DATA ' + encodeData(data)
 			], enabledProfiles = data.profiles.filter(profile => profile.enabled),
 				hasEnvelope = this.capabilities().includes('envelope');
 
@@ -346,7 +346,7 @@
 			if (!enabledProfiles.length) {
 				result.push('# Vacation message is disabled.');
 			}
-			result.push('# END:NEXTSNAPMAIL:VACATION');
+			result.push('# END:SNAPMAIL_LT:VACATION');
 			return result.join('\r\n');
 		}
 
@@ -415,8 +415,8 @@
 	}
 
 	rl.addSettingsViewModel(
-		NextSnapMailVacationUserSettings,
-		'NextSnapMailVacationUserSettings',
+		SnapMailLTVacationUserSettings,
+		'SnapMailLTVacationUserSettings',
 		'NEXTCLOUD_VACATION/TAB_NAME',
 		'vacation'
 	);

@@ -5,7 +5,7 @@ class TinymceComposerPlugin extends \RainLoop\Plugins\AbstractPlugin
 	const
 		NAME = 'TinyMCE Composer',
 		AUTHOR = 'LibertyTalk FM, Inc.',
-		URL = 'https://github.com/oe79/NextSnapMail',
+		URL = 'https://github.com/LibertyTalk/snapmail_lt',
 		VERSION = '1.0.1',
 		RELEASE = '2026-10-30',
 		REQUIRED = '2.34.0',

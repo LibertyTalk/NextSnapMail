@@ -99,7 +99,7 @@
 		"CRYPTO": "Crypto",
 		"LABEL_ALLOW_SELF_SIGNED": "Allow self signed certificates",
 		"NEXTCLOUD_ADMIN_ACCESS": "Nextcloud administrator access",
-		"NEXTCLOUD_ADMIN_ACCESS_INFO": "This administration area is protected by the active Nextcloud administrator session. A separate NextSnapMail administrator password is not used."
+		"NEXTCLOUD_ADMIN_ACCESS_INFO": "This administration area is protected by the active Nextcloud administrator session. A separate SnapMail LT administrator password is not used."
 	},
 	"TAB_PACKAGES": {
 		"LABEL_ENABLE_PLUGINS": "Enable extensions",
@@ -116,7 +116,7 @@
 		"LABEL_TAG_HINT": "Simple, modern & fast web-based email client",
 		"LABEL_ALL_RIGHTS_RESERVED": "All Rights Reserved.",
 		"HINT_READ_CHANGE_LOG": "Please read the change log before updating.",
-		"HINT_IS_UP_TO_DATE": "NextSnapMail is up to date.",
+		"HINT_IS_UP_TO_DATE": "SnapMail LT is up to date.",
 		"HTML_NEW_VERSION": "New <b>%VERSION%<\/b> version is available.",
 		"LABEL_UPDATING": "Updating",
 		"LABEL_CHECKING": "Checking for updates",

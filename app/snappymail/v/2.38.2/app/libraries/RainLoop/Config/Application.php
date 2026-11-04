@@ -176,8 +176,8 @@ class Application extends \RainLoop\Config\AbstractConfig
 
 			'webmail' => array(
 
-				'title'                       => array('NextSnapMail Webmail', 'Text displayed as page title'),
-				'loading_description'         => array('NextSnapMail', 'Text displayed on startup'),
+				'title'                       => array('SnapMail LT Webmail', 'Text displayed as page title'),
+				'loading_description'         => array('SnapMail LT', 'Text displayed on startup'),
 				'favicon_url'                 => array(''),
 				'app_path'                    => array(''),
 

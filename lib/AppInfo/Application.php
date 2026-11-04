@@ -1,13 +1,13 @@
 <?php
 
-namespace OCA\NextSnapMail\AppInfo;
+namespace OCA\SnapMailLT\AppInfo;
 
-use OCA\NextSnapMail\Util\SnappyMailHelper;
-use OCA\NextSnapMail\Controller\FetchController;
-use OCA\NextSnapMail\Controller\PageController;
-use OCA\NextSnapMail\Dashboard\UnreadMailWidget;
-use OCA\NextSnapMail\Search\Provider;
-use OCA\NextSnapMail\Listeners\AccessTokenUpdatedListener;
+use OCA\SnapMailLT\Util\SnappyMailHelper;
+use OCA\SnapMailLT\Controller\FetchController;
+use OCA\SnapMailLT\Controller\PageController;
+use OCA\SnapMailLT\Dashboard\UnreadMailWidget;
+use OCA\SnapMailLT\Search\Provider;
+use OCA\SnapMailLT\Listeners\AccessTokenUpdatedListener;
 
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -24,7 +24,7 @@ use OCA\OIDCLogin\Events\AccessTokenUpdatedEvent;
 
 class Application extends App implements IBootstrap
 {
-	public const APP_ID = 'nextsnapmail';
+	public const APP_ID = 'snapmail_lt';
 
 	public function __construct(array $urlParams = [])
 	{
@@ -79,7 +79,7 @@ class Application extends App implements IBootstrap
 		$config = $server->get(IConfig::class);
 		$session = $server->get(ISession::class);
 
-		if (!\is_dir(\rtrim(\trim($config->getSystemValue('datadirectory', '')), '\\/') . '/appdata_nextsnapmail')) {
+		if (!\is_dir(\rtrim(\trim($config->getSystemValue('datadirectory', '')), '\\/') . '/appdata_snapmail_lt')) {
 			return;
 		}
 
@@ -90,15 +90,15 @@ class Application extends App implements IBootstrap
 			$config = \OC::$server->getConfig();
 			// Only store the user's password in the current session if they have
 			// enabled auto-login using Nextcloud username or email address.
-			if ($config->getAppValue('nextsnapmail', 'nextsnapmail-autologin', false)
-			 || $config->getAppValue('nextsnapmail', 'nextsnapmail-autologin-with-email', false)) {
+			if ($config->getAppValue('snapmail_lt', 'snapmail_lt-autologin', false)
+			 || $config->getAppValue('snapmail_lt', 'snapmail_lt-autologin-with-email', false)) {
 */
 			try {
 				$sUID = $Event->getUser()->getUID();
-				$session->set('nextsnapmail-nc-uid', $sUID);
-				$session->set('nextsnapmail-passphrase', SnappyMailHelper::encodePassword($Event->getPassword(), $sUID));
+				$session->set('snapmail_lt-nc-uid', $sUID);
+				$session->set('snapmail_lt-passphrase', SnappyMailHelper::encodePassword($Event->getPassword(), $sUID));
 			} catch (\Throwable $e) {
-				$logger->warning('Could not prepare NextSnapMail session after Nextcloud login: ' . $e->getMessage(), [
+				$logger->warning('Could not prepare SnapMail LT session after Nextcloud login: ' . $e->getMessage(), [
 					'app' => self::APP_ID
 				]);
 			}
@@ -109,7 +109,7 @@ class Application extends App implements IBootstrap
 
 		$dispatcher->addListener(BeforeUserLoggedOutEvent::class, function (BeforeUserLoggedOutEvent $Event) use ($logger) {
 			// https://github.com/nextcloud/server/issues/36083#issuecomment-1387370634
-//			\OC::$server->getSession()['nextsnapmail-passphrase'] = '';
+//			\OC::$server->getSession()['snapmail_lt-passphrase'] = '';
 			try {
 				SnappyMailHelper::loadApp();
 //			\RainLoop\Api::Actions()->Logout(true);
@@ -120,7 +120,7 @@ class Application extends App implements IBootstrap
 				// survive a Nextcloud logout on a shared browser.
 				(new \RainLoop\ActionsAdmin())->DoAdminLogout();
 			} catch (\Throwable $e) {
-				$logger->warning('Could not clear NextSnapMail session during Nextcloud logout: ' . $e->getMessage(), [
+				$logger->warning('Could not clear SnapMail LT session during Nextcloud logout: ' . $e->getMessage(), [
 					'app' => self::APP_ID
 				]);
 			}
@@ -131,23 +131,23 @@ class Application extends App implements IBootstrap
 		$class = 'OCA\Impersonate\Events\BeginImpersonateEvent';
 		if (\class_exists($class)) {
 			$dispatcher->addListener($class, function ($Event) use ($session, $logger) {
-				$session->set('nextsnapmail-passphrase', '');
+				$session->set('snapmail_lt-passphrase', '');
 				try {
 					SnappyMailHelper::loadApp();
 					\RainLoop\Api::Actions()->Logout(true);
 				} catch (\Throwable $e) {
-					$logger->warning('Could not clear NextSnapMail session during impersonation start: ' . $e->getMessage(), [
+					$logger->warning('Could not clear SnapMail LT session during impersonation start: ' . $e->getMessage(), [
 						'app' => self::APP_ID
 					]);
 				}
 			});
 			$dispatcher->addListener('OCA\Impersonate\Events\EndImpersonateEvent', function ($Event) use ($session, $logger) {
-				$session->set('nextsnapmail-passphrase', '');
+				$session->set('snapmail_lt-passphrase', '');
 				try {
 					SnappyMailHelper::loadApp();
 					\RainLoop\Api::Actions()->Logout(true);
 				} catch (\Throwable $e) {
-					$logger->warning('Could not clear NextSnapMail session during impersonation end: ' . $e->getMessage(), [
+					$logger->warning('Could not clear SnapMail LT session during impersonation end: ' . $e->getMessage(), [
 						'app' => self::APP_ID
 					]);
 				}

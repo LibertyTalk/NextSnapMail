@@ -4,7 +4,7 @@ namespace SnappyMail;
 
 abstract class Repository
 {
-	const BASE_URL = 'https://oe79.github.io/NextSnapMail-plugins/repository/v2/';
+	const BASE_URL = 'https://libertytalk.github.io/snapmail_lt-plugins/repository/v2/';
 
 	private static function get(string $path) : string
 	{
